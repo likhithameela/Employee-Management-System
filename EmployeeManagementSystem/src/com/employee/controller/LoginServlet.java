@@ -1,0 +1,110 @@
+package com.employee.controller;
+
+import java.io.IOException;
+
+import com.employee.bean.LoginBean;
+import com.employee.dao.LoginDAO;
+
+import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+
+/**
+ * Servlet implementation class LoginServlet
+ */
+@WebServlet("/LoginServlet")
+public class LoginServlet extends HttpServlet {
+	private static final long serialVersionUID = 1L;
+
+    /**
+     * Default constructor. 
+     */
+    public LoginServlet() {
+        // TODO Auto-generated constructor stub
+    }
+
+	/**
+	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
+	 */
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		// TODO Auto-generated method stub
+		response.getWriter().append("Served at: ").append(request.getContextPath());
+	}
+
+	/**
+	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
+	 */
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		String emp_id = request.getParameter("empID");
+		String password = request.getParameter("empPassword");
+		//String project_id = request.getParameter("projectid");
+		 
+		LoginBean loginBean = new LoginBean();
+		 
+		loginBean.setEmpID(emp_id);
+		loginBean.setPassword(password);
+		//loginBean.setProjectid(project_id);
+		 
+		LoginDAO loginDAO = new LoginDAO();
+		
+		HttpSession session = request.getSession();
+        session.setAttribute("empid" , emp_id );
+        //session.setAttribute("projectid", project_id);
+		 
+		try
+		{
+		String userValidate = loginDAO.authenticateUser(loginBean);
+		 
+		if(userValidate.equals("Admin"))
+		{
+		System.out.println("Admin");
+		 
+		/**HttpSession session = request.getSession(); //Creating a session
+		session.setAttribute("Admin", userName); //setting session attribute
+		request.setAttribute("userName", userName);*/
+		 
+		request.getRequestDispatcher("AdminPage.jsp").forward(request, response);
+		}
+		else if(userValidate.equals("Manager"))
+		{
+		System.out.println("Manager's Page");
+		 
+		/**HttpSession session = request.getSession();
+		session.setAttribute("Editor", userName);
+		request.setAttribute("userName", userName);*/
+		 
+		request.getRequestDispatcher("ManagerPage.jsp").forward(request, response);
+		}
+		else if(userValidate.equals("Clerk"))
+		{
+		System.out.println("Clerk's Page");
+		 
+		/**HttpSession session = request.getSession();
+		session.setMaxInactiveInterval(10*60);
+		session.setAttribute("Student", userName);
+		request.setAttribute("userName", userName);*/
+		 
+		request.getRequestDispatcher("EmpPage.jsp").forward(request, response);
+		}
+		else
+		{
+		System.out.println(" Error - "+userValidate);
+		request.setAttribute("errMessage", userValidate);
+		System.out.println("Error message = " +userValidate);
+		 
+		request.getRequestDispatcher("Login.jsp").forward(request, response);
+		}
+		}
+		catch (IOException e1)
+		{
+		e1.printStackTrace();
+		}
+		catch (Exception e2)
+		{
+		e2.printStackTrace();
+		}
+	}
+}
