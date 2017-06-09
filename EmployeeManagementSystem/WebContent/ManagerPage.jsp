@@ -515,7 +515,15 @@ html, body, h1, h2, h3, h4, h5, h6 {
 			  <option value="TUP0003">
 			  <option value="TUP0004">
 			</datalist></td>
-			<td><button type="submit" align=center class="w3-button w3-black" value = "submit">Submit</button></td>
+		  </tr>
+		  
+		  <tr align = "center">
+		    <td>Employee ID :</td>
+			<td><input type="text" name="empid"  placeholder = "">  </td>
+		  </tr>
+		  
+		  <tr>
+		  <td><button type="submit" align=center class="w3-button w3-black" value = "submit">Submit</button></td>
 		  </tr>
 		  
 		<!--   <

@@ -41,14 +41,17 @@ public class ProjectIdServlet extends HttpServlet {
 		
 		
 		String project_id = request.getParameter("projectid");
+		String employee_id = request.getParameter("empid");
 		
 		LoginBean loginBean = new LoginBean();
 		 
 		loginBean.setProjectid(project_id);
+		loginBean.setEmpID(employee_id);
 		
 
 		HttpSession session = request.getSession();
         session.setAttribute("projectid" , project_id );
+        session.setAttribute("employeeid" , employee_id );
         
         try {
         	response.sendRedirect("ProjectDetails.jsp");
