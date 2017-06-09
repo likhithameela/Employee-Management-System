@@ -59,6 +59,38 @@ public class TimeSheetServlet extends HttpServlet {
 		ts.setTask_name2(task_name2);
 		ts.setNum_of_hours2(numOfHours2);
 		ts.setDescription2(description2);
+		
+		String task_name3 = request.getParameter("3");
+		String numOfHours3 = request.getParameter("hours3");
+		String description3 = request.getParameter("description3");
+		
+		ts.setTask_name3(task_name3);
+		ts.setNum_of_hours3(numOfHours3);
+		ts.setDescription3(description3);
+		
+		String task_name4 = request.getParameter("4");
+		String numOfHours4 = request.getParameter("hours4");
+		String description4 = request.getParameter("description4");
+		
+		ts.setTask_name4(task_name4);
+		ts.setNum_of_hours4(numOfHours4);
+		ts.setDescription4(description4);
+		
+		String task_name5 = request.getParameter("5");
+		String numOfHours5 = request.getParameter("hours5");
+		String description5 = request.getParameter("description5");
+		
+		ts.setTask_name5(task_name5);
+		ts.setNum_of_hours5(numOfHours5);
+		ts.setDescription5(description5);
+		
+		String task_name6 = request.getParameter("6");
+		String numOfHours6 = request.getParameter("hours6");
+		String description6 = request.getParameter("description6");
+		
+		ts.setTask_name6(task_name6);
+		ts.setNum_of_hours6(numOfHours6);
+		ts.setDescription6(description6);
 		ts.saveData();
 		
 	    RequestDispatcher rd = request.getRequestDispatcher("EmpPage.jsp");

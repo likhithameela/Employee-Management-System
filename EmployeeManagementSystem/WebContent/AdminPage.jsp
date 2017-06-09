@@ -110,8 +110,9 @@
     </div>
    <br>
    
-   <table  align = "center">
    <form method = "post" action = "EmployeeRegisterServlet">
+   <table  align = "center">
+   
      <tr>
 	 <td>Employee ID :<hspace> </td>
 	 <td><input type="text" name="emp_id"  placeholder = "Eg.TU0001"></td>
@@ -230,7 +231,15 @@
       <h1>Apply Leave</h1>
     </div>
    <br>
+   <% 
+   String emp = (String) session.getAttribute("empid");
+   %>
+   
+   <form method = "post" action = "AdminLeaveSheetServlet">
 <table align=center style="width:65%">
+
+   
+
   <tr align = center>
     <td>Category :</td>
     <td><input list="category" name="category">
@@ -252,11 +261,17 @@
    <td><input type="text" name="Reason"  placeholder = "">  </td>
 </tr>
 
+<tr>
+<td><input type = "hidden" name = "empid" value = "<%=emp%>"></td>
+</tr>
+
+
 </table>
 <br>
 <center><button type="submit" align = center class="w3-button w3-black ">Apply</button> </center>
-</div>
+</form>
 
+</div>
 </div>
 </div>
 </div>
@@ -316,35 +331,40 @@
       <span onclick="document.getElementById('Leave History Pop').style.display='none'" class="w3-button w3-display-topright w3-large">x</span>
       <h2>Leave History</h2>
     </div>
-   <br><center><fieldset style="width:50%">
-				<legend>History / Summary</legend>
-				<div class="main-details">
-				
-	<div class="salesDashBoardDropDown">
-		<form action="" method="post" name="yearform">
-		<!--<div  style="float: left;padding-top:5px;">Quarter : </div>-->
-			<div>
-				<select name="year" id="year"  class="dropdown" style="width:150px;" onchange="this.form.submit();">
-										<option value = "2016">2016</option>
-												<option value = "2017" selected="selected">2017</option>
-												<option value = "2018">2018</option>
-											</select>
-			</div>
-		</form>
-	</div>
+   <br><br>
+   <sql:query dataSource = "${dbSource}" var = "leave" >
+           select  category , from_date , to_date from leave_sheet where emp_id = "<%= session.getAttribute("empid") %>";
+      </sql:query>
+      
+      <center><fieldset style="width:50%">
 				<legend>Leave History</legend>
-					<table border="0" width="100%" cellspacing="0" cellpadding="0"> 
+				<div class="main-details">
+					<table border="0" class="" width="100%" cellspacing="0" cellpadding="0"> 
+					<c:forEach var="row" items="${leave.rows}">
 						<thead>
 							<tr>
 								<th class="orange-gradient">Category</th>
 								<th class="orange-gradient">From Date</th>
 								<th class="orange-gradient">To Date</th>
-								
 							</tr>
-						</thead></table>
-                        </fieldset><br></center>
-                        </div>
-                        </div>
+						</thead>
+						
+						<tbody>
+						
+						<tr >
+						<td align="center"><c:out value="${row.category}" /></td>	
+						<td align="center"><c:out value="${row.from_date}" /></td>
+						<td align="center"><c:out value="${row.to_date}" /></td>
+						</tr>
+											 
+						</tbody>
+						
+						</c:forEach>
+					</table> </div> 
+					</fieldset> </center>
+			
+     </div>
+   </div>
                 
 
       

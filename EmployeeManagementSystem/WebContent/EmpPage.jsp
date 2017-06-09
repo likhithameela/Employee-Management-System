@@ -155,13 +155,16 @@ html,body,h1,h2,h3,h4,h5,h6 {font-family: "Roboto", sans-serif}
     <option value="Training"> 
   </datalist>
   </td>
+  
   <td>
     <input type="text" name="hours1"  placeholder = "00:00">
   </td>
+  
   <td>
     <input type="text" name="description1">
   </td>
   </tr>
+  
   <tr align = center>
   <td><input list="2" name="2">
   <datalist id="2">
@@ -302,6 +305,10 @@ html,body,h1,h2,h3,h4,h5,h6 {font-family: "Roboto", sans-serif}
    <td><input type="text" name="Reason"  placeholder = "">  </td>
 </tr>
 
+<tr>
+<td><input type = "hidden" name = "empid" value = "<%=emp%>"></td>
+</tr>
+
 </table>
 <br>
 <center><button type="submit" align = center class="w3-button w3-black ">Apply</button> </center>
@@ -360,55 +367,93 @@ html,body,h1,h2,h3,h4,h5,h6 {font-family: "Roboto", sans-serif}
       <span onclick="document.getElementById('Leave History Pop').style.display='none'" class="w3-button w3-display-topright w3-large">x</span>
       <h2>Leave History</h2>
     </div>
-   <br><center><fieldset style="width:50%">
-				<legend>History / Summary</legend>
-				<div class="main-details">
-				
-	<div class="salesDashBoardDropDown">
-		<form action="" method="post" name="yearform">
-		<!--<div  style="float: left;padding-top:5px;">Quarter : </div>-->
-			<div>
-				<select name="year" id="year"  class="dropdown" style="width:150px;" onchange="this.form.submit();">
-										<option value = "2016">2016</option>
-												<option value = "2017" selected="selected">2017</option>
-												<option value = "2018">2018</option>
-											</select>
-			</div>
+    <br><br>
+     <sql:query dataSource = "${dbSource}" var = "leave" >
+           select  category , from_date , to_date from leave_sheet where emp_id = "<%= session.getAttribute("empid") %>";
+      </sql:query>
+      
+      <center>
+			<form>
+				<table border="1" width="40%">
+					<caption><h3>Leave History</h3></caption>
+					<tr>
+						<th>Category</th>
+						<th>From Date</th>
+						<th>To Date</th>
+					</tr>
+					<c:forEach var="row" items="${leave.rows}">
+						<tr>
+							<td><c:out value="${row.category}" /></td>
+							<td><c:out value="${row.from_date}" /></td>
+							<td><c:out value="${row.to_date}" /></td>
+						</tr>
+					</c:forEach>
+				</table>
 	</div>
+	</form>
+	</center>
+      <br><br><br><br><br><br>
+      
+      <!--<center><fieldset style="width:50%">
 				<legend>Leave History</legend>
-					<table border="0" width="100%" cellspacing="0" cellpadding="0"> 
+				<div class="main-details">
+					<table border="0" class="" width="100%" cellspacing="0" cellpadding="0"> 
+					<c:forEach var="row" items="${leave.rows}">
 						<thead>
 							<tr>
 								<th class="orange-gradient">Category</th>
 								<th class="orange-gradient">From Date</th>
 								<th class="orange-gradient">To Date</th>
-								
 							</tr>
-						</thead></table>
-                        </fieldset><br></center></div></div>
+						</thead>
+						
+						<tbody>
+						
+						<tr >
+						<td align="center"><c:out value="${row.category}" /></td>	
+						<td align="center"><c:out value="${row.from_date}" /></td>
+						<td align="center"><c:out value="${row.to_date}" /></td>
+						</tr>
+											 
+						</tbody>
+						
+						</c:forEach>
+					</table> </div> 
+					</fieldset> </center>-->
+      
+      </div>
+      </div>
+    
+   <br><br><br>
       
 <!---PayRoll Pop-->
 <div id="PayRoll Pop" class="w3-modal">
   <div class="w3-modal-content w3-animate-zoom">
     <div class="w3-container w3-black w3-display-container">
       <span onclick="document.getElementById('PayRoll Pop').style.display='none'" class="w3-button w3-display-topright w3-large">x</span>
-      <h1>PayRoll</h1>
-      
+      <h1>PayRoll</h1>   
     </div>
-
-    <table >
-					
-					<c:forEach var="row" items="${result.rows}">
+      
+   <sql:query dataSource = "${dbSource}" var = "payroll" >
+           select salary from employee where emp_id = "<%= session.getAttribute("empid") %>";
+      </sql:query>
+      
+      <center>
+			<form>
+				<table border="1" width="40%">
+					<caption><h3>Salary</h3></caption>
+					<tr>
+						<th>Salary</th>
+					</tr>
+					<c:forEach var="row" items="${payroll.rows}">
 						<tr>
-							<td><h1><c:out value="${row.emp_name}" /></h1></td>
+							<td><c:out value="${row.salary}" /></td>
 						</tr>
 					</c:forEach>
 				</table>
-      
-      
-   <sql:query dataSource = "${dbSource}" var = "result" >
-           select emp_name , designation , address , email , contact , leaves , salary from employee where emp_id = "<%= session.getAttribute("empid") %>";
-      </sql:query>
+	</div>
+	</form>
+	</center>
       
    <br>
 <br>
