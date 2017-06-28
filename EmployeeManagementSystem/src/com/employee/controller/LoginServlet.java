@@ -1,6 +1,7 @@
 package com.employee.controller;
 
 import java.io.IOException;
+import java.io.PrintWriter;
 
 import com.employee.bean.LoginBean;
 import com.employee.dao.LoginDAO;
@@ -41,6 +42,7 @@ public class LoginServlet extends HttpServlet {
 		String emp_id = request.getParameter("empID");
 		String password = request.getParameter("empPassword");
 		//String project_id = request.getParameter("projectid");
+		PrintWriter out = response.getWriter();
 		 
 		LoginBean loginBean = new LoginBean();
 		 
@@ -91,7 +93,10 @@ public class LoginServlet extends HttpServlet {
 		}
 		else
 		{
-		request.getRequestDispatcher("Login.jsp");
+			out.println("<script type=\"text/javascript\">"); 
+			out.println("alert(\"Username or password incorrect!!!\")"); 
+			out.println("</script>"); 
+			response.sendRedirect("Login.html");
 		}
 		}
 		catch (IOException e1)

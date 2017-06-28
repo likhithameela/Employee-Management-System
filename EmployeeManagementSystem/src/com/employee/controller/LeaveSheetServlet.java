@@ -10,6 +10,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.employee.bean.LeaveSheet;
+import com.employee.bean.LoginBean;
+import com.employee.dao.LoginDAO;
 
 /**
  * Servlet implementation class LeaveSheetServlet
@@ -52,6 +54,7 @@ public class LeaveSheetServlet extends HttpServlet {
 		ls.setReason(reason);
 		ls.setEmp_id(emp_id);
 		ls.saveData();
+        
 		
 		RequestDispatcher rd = request.getRequestDispatcher("EmpPage.jsp");
 		rd.forward(request, response);

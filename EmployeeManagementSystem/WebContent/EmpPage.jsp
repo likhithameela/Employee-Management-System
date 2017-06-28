@@ -296,9 +296,9 @@ html,body,h1,h2,h3,h4,h5,h6 {font-family: "Roboto", sans-serif}
 
 <tr>
  <td>From Date:</td>
- <td><input type="date" name="from_date"  placeholder = "yyyy/mm/dd">  </td>
+ <td><input type="text" name="from_date"  placeholder = "yyyy/mm/dd">  </td>
  <td>To Date:</td> 
-  <td><input type="date" name="to_date"  placeholder = "yyyy//mm/dd">  </td>
+  <td><input type="text" name="to_date"  placeholder = "yyyy/mm/dd">  </td>
 </tr>  
 <tr>
    <td>Reason	 :</td>
@@ -433,50 +433,84 @@ html,body,h1,h2,h3,h4,h5,h6 {font-family: "Roboto", sans-serif}
       <span onclick="document.getElementById('PayRoll Pop').style.display='none'" class="w3-button w3-display-topright w3-large">x</span>
       <h1>PayRoll</h1>   
     </div>
+      <br>
+ <sql:query dataSource = "${dbSource}" var = "salary" >
+           select  salary , ((salary*30)/100) as basic , ((((salary*30)/100)*40)/100) as hra , ((salary * 10)/100) as da , (((salary*30)/100) + ((((salary*30)/100)*40)/100) + ((salary * 10)/100)) as gross , (salary - (((salary*30)/100) + ((((salary*30)/100)*40)/100) + ((salary * 10)/100))) as oa , (((salary - ((((salary*30)/100)*40)/100) )*10)/100) as incometax , (salary - (((salary - ((((salary*30)/100)*40)/100) )*10)/100)) as netpay from employee where emp_id = "<%= session.getAttribute("empid") %>";
+      </sql:query> 
       
-   <sql:query dataSource = "${dbSource}" var = "payroll" >
-           select salary from employee where emp_id = "<%= session.getAttribute("empid") %>";
-      </sql:query>
-      
-      <center>
-			<form>
-				<table border="1" width="40%">
-					<caption><h3>Salary</h3></caption>
-					<tr>
-						<th>Salary</th>
-					</tr>
-					<c:forEach var="row" items="${payroll.rows}">
-						<tr>
-							<td><c:out value="${row.salary}" /></td>
+ <center>
+						<fieldset style="width: 70%">
+							<legend>Pay Slip</legend>
+							<div class="main-details">
+							<table width = "50%" border = "1">
+							 <thead>
+							<tr>
+							    <th class="orange-gradient">Type</th>
+							    <th class="orange-gradient">Amount</th>
+								
+							</tr>
+						</thead>
+								<c:forEach var="row" items="${salary.rows}">
+						
+						<tbody>
+						
+						<tr >
+						<th class="orange-gradient">Salary</th>
+						<td align="center"><c:out value="${row.salary}" /></td>
 						</tr>
-					</c:forEach>
-				</table>
-	</div>
-	</form>
-	</center>
-      
+						
+						<tr >
+						<th class="orange-gradient">Basic Salary</th>
+						<td align="center"><c:out value="${row.basic}" /></td>
+						</tr>
+						
+						<tr >
+						<th class="orange-gradient">HRA</th>
+						<td align="center"><c:out value="${row.hra}" /></td>
+						</tr>
+						
+						<tr >
+						<th class="orange-gradient">DA</th>
+						<td align="center"><c:out value="${row.da}" /></td>
+						</tr>
+						
+						<tr >
+						<th class="orange-gradient">Gross Salary</th>
+						<td align="center"><c:out value="${row.gross}" /></td>
+						</tr>
+						
+						<tr >
+						<th class="orange-gradient">Other Allowances</th>
+						<td align="center"><c:out value="${row.oa}" /></td>
+						</tr>
+						
+						<tr >
+						<th class="orange-gradient">Income Tax</th>
+						<td align="center"><c:out value="${row.incometax}" /></td>
+						</tr>
+						
+						<tr >
+						<th class="orange-gradient">Net Pay</th>
+						<td align="center"><c:out value="${row.netpay}" /></td>
+						</tr>
+						
+						
+											 
+						</tbody>
+						</c:forEach>									
+								
+								</table>
+							</div>
+						</fieldset>
+					</center>
    <br>
 <br>
 </div>
 </div>    
-
-    
-</div>
-</div>
-<!------>
-</div>
-</div>
-
-<!------>
-    <!-- End Right Column -->
-    </div>
-    
-  <!-- End Grid -->
-  </div>
-  
   <!-- End Page Container -->
-</div>
+  
 <br><br><br><br><br><br><br><br><br>
+
 <footer class="w3-container w3-black w3-center w3-margin-top">
   <i class="fa fa-facebook-official w3-hover-opacity"></i>
   <i class="fa fa-instagram w3-hover-opacity"></i>

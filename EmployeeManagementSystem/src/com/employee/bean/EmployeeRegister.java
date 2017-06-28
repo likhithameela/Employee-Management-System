@@ -1,6 +1,7 @@
 package com.employee.bean;
 
 import java.sql.Connection;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
@@ -140,16 +141,17 @@ public class EmployeeRegister {
 		this.password = password;
 	}
 	
-
-
-	public void saveData() {
+    
+    
+	public void saveData(LeaveSheet leavesheet) {
 		Connection connection = null;
+		
 		try {
 			connection = DataBaseUtility.getConnection();
 			Statement statement = connection.createStatement();
 			System.out.println(getEmpID());
 			System.out.println(getName());
-			statement.executeUpdate("insert into employee values('"+getEmpID()+"','"+getName()+"','"+getDateOfBirth()+"','"+getGender()+"','"+getPhone()+"','"+getEmail()+"','"+getAddress()+"','"+getDesignation()+"','"+getMangID()+"','"+getSalary()+"', 30,'"+getPassword()+"')");
+			statement.executeUpdate("insert into employee values('"+getEmpID()+"','"+getName()+"','"+getDateOfBirth()+"','"+getGender()+"','"+getPhone()+"','"+getEmail()+"','"+getAddress()+"','"+getDesignation()+"','"+getMangID()+"','"+getSalary()+"', 30 ,'"+getPassword()+"')");
          
 			System.out.println("executing");
 		}catch (SQLException e) {

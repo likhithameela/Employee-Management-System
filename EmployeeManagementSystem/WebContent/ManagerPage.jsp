@@ -330,53 +330,50 @@ html, body, h1, h2, h3, h4, h5, h6 {
 
 
 
-					<div id="Apply Leave Pop" class="w3-modal">
-						<div class="w3-modal-content w3-animate-zoom">
-							<div class="w3-container w3-black w3-display-container">
-								<span
-									onclick="document.getElementById('Apply Leave Pop').style.display='none'"
-									class="w3-button w3-display-topright w3-large">x</span>
-								<h1>Apply Leave</h1>
-							</div>
-							<br>
-							<form method = "post" action = "ManagerLeaveSheetServlet">
-							<table align=center style="width: 65%">
-								<tr align=center>
-									<td>Category :</td>
-									<td><input list="category" name="category"> <datalist
-											id="category">
-											<option value="CL">
-											<option value="SL">
-										</datalist></td>
-								</tr>
+<div id="Apply Leave Pop" class="w3-modal">+.
+  <div class="w3-modal-content w3-animate-zoom">
+    <div class="w3-container w3-black w3-display-container">
+      <span onclick="document.getElementById('Apply Leave Pop').style.display='none'" class="w3-button w3-display-topright w3-large">x</span>
+      <h1>Apply Leave</h1>
+    </div>
+   <br>
+   <form method = "post" action = "LeaveSheetServlet">
+<table align=center style="width:65%">
+  <tr align = center>
+    <td>Category :</td>
+    <td><input list="category" name="category">
+      <datalist id="category">
+       <option value="cl">
+       <option value = "sl">
+      </datalist>
+   </td> 
+</tr>
 
-								<tr>
-									<td>From Date:</td>
-									<td><input type="date" name="from_date"
-										placeholder="dd/mm/yyyy"></td>
-									<td>To Date:</td>
-									<td><input type="date" name="to_date"
-										placeholder="dd/mm/yyyy"></td>
-								</tr>
-								<tr>
-									<td>Reason :</td>
-									<td><input type="text" name="Reason" placeholder="">
-									</td>
-									<tr><td><input type = "hidden" name = "empid" value = "<%=emp%>"></td></tr>
-									
-								</tr>
+<tr>
+ <td>From Date:</td>
+ <td><input type="text" name="from_date"  placeholder = "yyyy/mm/dd">  </td>
+ <td>To Date:</td> 
+  <td><input type="text" name="to_date"  placeholder = "yyyy//mm/dd">  </td>
+</tr>  
+<tr>
+   <td>Reason	 :</td>
+   <td><input type="text" name="Reason"  placeholder = "">  </td>
+</tr>
 
-							<br>
-							<center>
-								<button type="submit" align=center class="w3-button w3-black ">Apply</button>
-							</center>
-							</form>
-							</table>
-						</div>
+<tr>
+<td><input type = "hidden" name = "empid" value = "<%=emp%>"></td>
+</tr>
 
-					</div>
-				</div>
-			</div>
+</table>
+<br>
+<center><button type="submit" align = center class="w3-button w3-black ">Apply</button> </center>
+</form>
+
+</div>
+
+</div>
+</div>
+</div>
 
 
 
@@ -486,9 +483,80 @@ html, body, h1, h2, h3, h4, h5, h6 {
 					class="w3-button w3-display-topright w3-large">x</span>
 				<h1>PayRoll</h1>
 			</div>
-			<br>
-			<center>CONGRATULATIONS.!</center>
-			<br>
+			
+			
+			<sql:query dataSource = "${dbSource}" var = "salary" >
+           select  salary , ((salary*30)/100) as basic , ((((salary*30)/100)*40)/100) as hra , ((salary * 10)/100) as da , (((salary*30)/100) + ((((salary*30)/100)*40)/100) + ((salary * 10)/100)) as gross , (salary - (((salary*30)/100) + ((((salary*30)/100)*40)/100) + ((salary * 10)/100))) as oa , (((salary - ((((salary*30)/100)*40)/100) )*10)/100) as incometax , (salary - (((salary - ((((salary*30)/100)*40)/100) )*10)/100)) as netpay from employee where emp_id = "<%= session.getAttribute("empid") %>";
+      </sql:query> 
+      
+ <center>
+						
+							<fieldset style="width: 70%">
+							<legend>Pay Slip</legend>
+							<div class="main-details">
+							<table width = "50%" border = "1">
+							 <thead>
+							<tr>
+							    <th class="orange-gradient">Type</th>
+							    <th class="orange-gradient">Amount</th>
+								
+							</tr>
+						</thead>
+								<c:forEach var="row" items="${salary.rows}">
+						
+						<tbody>
+						
+						<tr >
+						<th class="orange-gradient">Salary</th>
+						<td align="center"><c:out value="${row.salary}" /></td>
+						</tr>
+						
+						<tr >
+						<th class="orange-gradient">Basic Salary</th>
+						<td align="center"><c:out value="${row.basic}" /></td>
+						</tr>
+						
+						<tr >
+						<th class="orange-gradient">HRA</th>
+						<td align="center"><c:out value="${row.hra}" /></td>
+						</tr>
+						
+						<tr >
+						<th class="orange-gradient">DA</th>
+						<td align="center"><c:out value="${row.da}" /></td>
+						</tr>
+						
+						<tr >
+						<th class="orange-gradient">Gross Salary</th>
+						<td align="center"><c:out value="${row.gross}" /></td>
+						</tr>
+						
+						<tr >
+						<th class="orange-gradient">Other Allowances</th>
+						<td align="center"><c:out value="${row.oa}" /></td>
+						</tr>
+						
+						<tr >
+						<th class="orange-gradient">Income Tax</th>
+						<td align="center"><c:out value="${row.incometax}" /></td>
+						</tr>
+						
+						<tr >
+						<th class="orange-gradient">Net Pay</th>
+						<td align="center"><c:out value="${row.netpay}" /></td>
+						</tr>
+						
+						
+											 
+						</tbody>
+						</c:forEach>	
+						</fieldset>								
+								<br><br>
+								</table>
+							</div>
+					</center>
+			
+			
 		</div>
 	</div>
 	

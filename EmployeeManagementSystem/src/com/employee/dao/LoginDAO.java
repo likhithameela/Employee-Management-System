@@ -25,13 +25,13 @@ public class LoginDAO {
 	String empPassword = "";
 	String designation = "";
 	String salary = "";
-	 
+	
 	try
 	{
 	con = DataBaseUtility.getConnection();
 	statement = con.createStatement();
 	resultSet = statement.executeQuery("select designation , salary from employee where emp_id = '"+emp_id+"' AND password = '"+password+"' ");
-	 
+	
 	while(resultSet.next())
 	{
 	/**userNameDB = resultSet.getString("username");

@@ -1,6 +1,10 @@
+
+
+
 package com.employee.bean;
 
 import java.sql.Connection;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
@@ -15,7 +19,7 @@ public class ApplyLeave {
 	
 	public String getCategory() {
 		return category;
-	}
+	}	
 	public void setCategory(String category) {
 		this.category = category;
 	}
@@ -49,11 +53,22 @@ public class ApplyLeave {
 			connection = DataBaseUtility.getConnection();
 			Statement statement = connection.createStatement();
 			System.out.println(getReason());
+			String emp_id = getEmp_id();
+			String fromdate = getFromDate();
+			String todate = getToDate();
+			System.out.println(emp_id);
+			System.out.println("fromdate" + fromdate);
+			System.out.println("todate" + todate);
 			statement.executeUpdate("insert into leave_sheet values('"+getCategory()+"','"+getFromDate()+"','"+getToDate()+"','"+getReason()+"','"+getEmp_id()+"')");
+			System.out.println("executing");
+			statement.executeUpdate("update employee set leaves = leaves - DATEDIFF('"+getToDate()+"' , '"+getFromDate()+"') where emp_id = '"+emp_id+"' ");
 			System.out.println("executing");
 		}catch (SQLException e) {
 			e.printStackTrace();
 		}	
 	}
 }
+
+
+
 

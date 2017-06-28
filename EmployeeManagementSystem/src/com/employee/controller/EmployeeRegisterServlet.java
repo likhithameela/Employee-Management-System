@@ -75,7 +75,7 @@ public class EmployeeRegisterServlet extends HttpServlet {
         er.setSalary(salary);
 		//er.setLeave(30);
 		er.setPassword("trustus");
-		er.saveData();
+		er.saveData(null);
 		RequestDispatcher rd = request.getRequestDispatcher("AdminPage.jsp");
 			rd.forward(request, response);
 	}
