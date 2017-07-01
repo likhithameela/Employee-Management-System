@@ -35,7 +35,7 @@ html, body, h1, h2, h3, h4, h5, h6 {
 			src="oooo.png" width="60px" height="50px">TreYsta unS</a>
 		<!-- Right-sided navbar links -->
 		<div class="w3-right w3-hide-small" align="left">
-			<a href="Login.html" class="w3-bar-item w3-button"> <i
+			<a href="Login.jsp" class="w3-bar-item w3-button"> <i
 				class="fa fa-power-off fa-fw w3-margin-right w3-xxlarge w3-text-white"></i></a>
 		</div>
 	</div>

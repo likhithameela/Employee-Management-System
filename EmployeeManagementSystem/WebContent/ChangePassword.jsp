@@ -1,8 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-15"
     pageEncoding="ISO-8859-15"%>
-
-    
-<!DOCTYPE html>
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <title>Login</title>
 <meta charset="UTF-8">
@@ -11,6 +9,18 @@
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 <link href="EmpLogin.css" rel="stylesheet">
+
+<script>
+function validate(){
+if(document.f.new.value!=document.f.confirm.value){
+alert("New Password and Confirm Password should be same! Re-enter confirm-password!");
+document.f.confirm.value="";
+return false;
+}
+return true;
+}
+</script>
+
 <style>
 section {
     background-color:#f0f0f5;
@@ -21,6 +31,7 @@ section {
 }
 </style>
 <body>
+
 
 <!-- Navbar (sit on top) -->
 <div class="w3-top">
@@ -48,30 +59,42 @@ section {
 </nav>
 <br><br><br><br>
 
-  <h1 class="w3-center">EMPLOYEE LOGIN</h1>
+  <h1 class="w3-center">CHANGE PASSWORD</h1>
   
   <br>
-  <form method = "post"  action = "LoginServlet">
+  <form name="f" action="change.jsp" method="post" onsubmit="return validate();">
   <center><section align="center">
-<table align=center style="width:30%">
+<table align=center style="width:100%">
  
   <tr align = center>
-    <td>UserID</td>
-    <td><input type="text" name="empID"></td>
+  
+    <tr align = center>
+    <td>ID</td>
+    <td><input type="text" name="emp_id"></td>
+    
+  </tr> 
+  
+    <td>Old Password</td>
+    <td><input type="password" name="oldpassword" ></td>
    
   </tr><br>
   <tr align = center>
-    <td>Password</td>
-    <td><input type="password" name="empPassword"></td>
+    <td>New Password</td>
+    <td><input type="password" name="newpassword" required minlength = "8"></td>
+    
+  </tr> 
+  
+  <tr align = center>
+    <td>Confirm Password</td>
+    <td><input type="password" name="confirmpassword" required minlength = "8"></td>
     
   </tr>  
   
   </tr>
 </table>
 <br>
-<a href="ChangePassword.jsp">ChangePassword</a>
 <br>
-<center><button id="EmpLogin" type="submit" onclick="">Login</button></center>
+<center><button id="change" type="submit" onclick="">Change</button></center>
 </form>
 
  </section></center><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
@@ -86,14 +109,6 @@ section {
 </footer>
 
 </body>
+
+
 </html>
-
-
-
-
-
-
-
-
-
-
