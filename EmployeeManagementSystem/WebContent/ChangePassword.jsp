@@ -1,5 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-15"
     pageEncoding="ISO-8859-15"%>
+    
+    <%@ page import = "com.employee.bean.LoginBean"%>
+<%@ page import = "java.sql.*" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <title>Login</title>
@@ -36,6 +39,11 @@ section {
 </style>
 <body>
 
+<%LoginBean currentUser = (LoginBean)(session.getAttribute("currentSessionUser")); %>
+   <!--  <= currentUser.getEmpID() %> -->
+   <% 
+   String emp = (String) session.getAttribute("empid");
+   %>
 
 <!-- Navbar (sit on top) -->
 <div class="w3-top">
@@ -72,12 +80,6 @@ section {
  
   <tr align = center>
   
-    <tr align = center>
-    <td>ID</td>
-    <td><input type="text" name="emp_id"></td>
-    
-  </tr> 
-  
     <td>Old Password</td>
     <td><input type="password" name="oldpassword" ></td>
    
@@ -91,7 +93,7 @@ section {
   <tr align = center>
     <td>Confirm Password</td>
     <td><input type="password" name="confirmpassword" ></td>
-    
+    <td><input type = "hidden" name = "empid" value = "<%=emp%>"></td>
   </tr>  
   
   </tr>

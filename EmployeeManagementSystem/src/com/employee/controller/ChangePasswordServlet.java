@@ -41,13 +41,13 @@ public class ChangePasswordServlet extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		String emp_id = request.getParameter("empID");
-		String empID = request.getParameter("emp_id");
+		String emp_id = request.getParameter("empid");
 		String newpassword = request.getParameter("newpassword");
+		System.out.println(emp_id);
 		
-		LoginBean loginBean = new LoginBean();
+		LoginBean loginbean = new LoginBean();
 		 
-		loginBean.setEmpID(emp_id);
+		loginbean.setEmpID(emp_id);
 		
         LoginDAO loginDAO = new LoginDAO();
 		
@@ -55,7 +55,7 @@ public class ChangePasswordServlet extends HttpServlet {
         session.setAttribute("empid" , emp_id );
 		
 		ChangePassword cp = new ChangePassword();
-		cp.setEmpID(empID);
+		cp.setEmpID(emp_id);
 		cp.setNewPassword(newpassword);
         cp.saveData();
         RequestDispatcher rd = request.getRequestDispatcher("ChangePassword.jsp");

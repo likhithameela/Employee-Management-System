@@ -299,7 +299,7 @@ html,body,h1,h2,h3,h4,h5,h6 {font-family: "Roboto", sans-serif}
       <h1>Apply Leave</h1>
     </div>
    <br>
-   <form method = "post" action = "LeaveSheetServlet" enctype = "text/plain">
+   <form method = "post" action = "LeaveSheetServlet">
 <table align=center style="width:65%">
   <tr align = center>
     <td>Category :</td>
@@ -316,38 +316,45 @@ html,body,h1,h2,h3,h4,h5,h6 {font-family: "Roboto", sans-serif}
  <td>From Date:</td>
  <td><input type="text" name="from_date"  placeholder = "yyyy/mm/dd">  </td>
  <td>To Date:</td> 
-  <td><input type="text" id="to_date"  placeholder = "yyyy/mm/dd">  </td>
+  <td><input type="text" name="to_date"  placeholder = "yyyy/mm/dd">  </td>
 </tr>  
 <tr>
    <td>Reason	 :</td>
-   <td><input type="text" id="Reason"  placeholder = "">  </td>
+   <td><input type="text" name="Reason"  placeholder = "">  </td>
 </tr>
 
 <tr>
-<td><input type = "hidden" id = "empid" value = "<%=emp%>"></td>
+<td><input type = "hidden" name = "empid" value = "<%=emp%>"></td>
 </tr>
 
 </table>
 <br>
 
-<%
-String fromdate = request.getParameter("from_date") ;
-%>
-
-
 <center>
-
-<a href="mailto:?subject= Leave Application&body=From:%20%0D%0ATo:%20%0D%0AReason:">
-
-Send Mail
-
-</a>
 
 </center>
 <br>
-<center><button type="submit" align = center class="w3-button w3-black ">Apply</button> </center>
+<center><button type = "submit" align = center class="w3-button w3-black">Apply</button> </center>
 </form>
 
+<!-- 
+    <input type="text" id="email"></input>
+    <input type="text" id="subject"></input>
+    <button onclick="myFunction()">Click me</button>
+
+    <p id="demo"></p>
+
+    <script>
+      function myFunction() {
+        var input = document.getElementById('email');
+        email = input.value;
+        var input = document.getElementById('subject');
+        subject = input.value;
+
+        window.location.href = "mailto:" + email + "?subject=" + subject;
+      }
+    </script>
+  -->
 </div>
 
 </div>
