@@ -7,6 +7,7 @@
 <%@ page import = "com.employee.bean.LoginBean"%>
 <%@ page import = "java.sql.*" %>
 
+
     <!DOCTYPE html>
 <html>
 <title>EmployeePage</title>
@@ -25,14 +26,21 @@ html,body,h1,h2,h3,h4,h5,h6 {font-family: "Roboto", sans-serif}
     }
 </style>
 <div class="w3-top">
-  <div class="w3-bar w3-black w3-card-2" id="myNavbar">
-<a href="Home.html" class="w3-bar-item w3-button w3-wide"><img src="oooo.png" width="60px" height="50px">TreYsta unS</a>    <!-- Right-sided navbar links -->    
-   <div class="w3-right w3-hide-small" align ="left">
-      <a href="Login.jsp" class="w3-bar-item w3-button"> <i class="fa fa-power-off fa-fw w3-margin-right w3-xxlarge w3-text-white"></i></a>
-  </div>
-</div>
-</div>
+	<div class="w3-bar w3-black w3-card-2" id="myNavbar">
+		<a href="Home.html" class="w3-bar-item w3-button w3-wide"><img
+			src="oooo.png" width="60px" height="50px">TreYsta unS</a>
+			
+		<!-- Right-sided navbar links -->
+		<div class="w3-right w3-hide-small" align="left">
+		   <div class="w3-right w3-hide-small">
+      <a href="ChangePassword.jsp" class="w3-bar-item w3-button">Change Password</a>
 
+    </div>
+			<a href="Login.jsp" class="w3-bar-item w3-button"> <i class="fa fa-power-off fa-fw w3-margin-right w3-xxlarge w3-text-white"></i></a>
+				
+		</div>
+	</div>
+</div>
 <br>
 <br><br>
 
@@ -102,7 +110,7 @@ html,body,h1,h2,h3,h4,h5,h6 {font-family: "Roboto", sans-serif}
    
         <div class="w3-container w3-card-2 w3-white w3-margin-bottom">
         <h2 class=" w3-padding-16"><i class="fa fa-calendar-o fa-fw w3-margin-right w3-xxlarge w3-text-teal"></i>
-        <button onclick="document.getElementById('Leave Management Pop').style.display='block'"  class="button" id="Leave Management">Leave Mangaement</button>
+        <button onclick="document.getElementById('Leave Management Pop').style.display='block'"  class="button" id="Leave Management">Leave Management</button>
         
 </div>
    
@@ -110,6 +118,15 @@ html,body,h1,h2,h3,h4,h5,h6 {font-family: "Roboto", sans-serif}
         <h2 class=" w3-padding-16"><i class="fa fa-money fa-fw w3-margin-right w3-xxlarge w3-text-teal"></i>
         <button onclick="document.getElementById('PayRoll Pop').style.display='block'"  class="button" id="PayRoll">PayRoll</button>
 </div>
+
+<div class="w3-container w3-card-2 w3-white w3-margin-bottom">
+					<h2 class=" w3-padding-16">
+						<i
+							class="fa fa-search fa-fw w3-margin-right w3-xxlarge w3-text-teal"></i>
+						<button
+							onclick="document.getElementById('Project Details Pop').style.display='block'"
+							class="button" id="Project Details">Project Details</button>
+				</div>
    
 
 
@@ -294,6 +311,7 @@ html,body,h1,h2,h3,h4,h5,h6 {font-family: "Roboto", sans-serif}
    </td> 
 </tr>
 
+
 <tr>
  <td>From Date:</td>
  <td><input type="text" name="from_date"  placeholder = "yyyy/mm/dd">  </td>
@@ -309,8 +327,11 @@ html,body,h1,h2,h3,h4,h5,h6 {font-family: "Roboto", sans-serif}
 <td><input type = "hidden" name = "empid" value = "<%=emp%>"></td>
 </tr>
 
+<a href="mailto:<%=request.getAttribute("email")%>?subject= Leave Application&body=From:%20%0D%0ATo:%20%0D%0AReason:">Send Email</a>
+
 </table>
 <br>
+
 <center><button type="submit" align = center class="w3-button w3-black ">Apply</button> </center>
 </form>
 
@@ -394,33 +415,6 @@ html,body,h1,h2,h3,h4,h5,h6 {font-family: "Roboto", sans-serif}
 	</center>
       <br><br><br><br><br><br>
       
-      <!--<center><fieldset style="width:50%">
-				<legend>Leave History</legend>
-				<div class="main-details">
-					<table border="0" class="" width="100%" cellspacing="0" cellpadding="0"> 
-					<c:forEach var="row" items="${leave.rows}">
-						<thead>
-							<tr>
-								<th class="orange-gradient">Category</th>
-								<th class="orange-gradient">From Date</th>
-								<th class="orange-gradient">To Date</th>
-							</tr>
-						</thead>
-						
-						<tbody>
-						
-						<tr >
-						<td align="center"><c:out value="${row.category}" /></td>	
-						<td align="center"><c:out value="${row.from_date}" /></td>
-						<td align="center"><c:out value="${row.to_date}" /></td>
-						</tr>
-											 
-						</tbody>
-						
-						</c:forEach>
-					</table> </div> 
-					</fieldset> </center>-->
-      
       </div>
       </div>
     
@@ -435,8 +429,11 @@ html,body,h1,h2,h3,h4,h5,h6 {font-family: "Roboto", sans-serif}
     </div>
       <br>
  <sql:query dataSource = "${dbSource}" var = "salary" >
-           select  salary , ((salary*30)/100) as basic , ((((salary*30)/100)*40)/100) as hra , ((salary * 10)/100) as da , (((salary*30)/100) + ((((salary*30)/100)*40)/100) + ((salary * 10)/100)) as gross , (salary - (((salary*30)/100) + ((((salary*30)/100)*40)/100) + ((salary * 10)/100))) as oa , (((salary - ((((salary*30)/100)*40)/100) )*10)/100) as incometax , (salary - (((salary - ((((salary*30)/100)*40)/100) )*10)/100)) as netpay from employee where emp_id = "<%= session.getAttribute("empid") %>";
+           select  salary , ((salary*30)/100) as basic , ((((salary*30)/100)*40)/100) as hra ,  ((salary * 10)/100) as da , (((salary*30)/100) + ((((salary*30)/100)*40)/100) + ((salary * 10)/100)) as gross , (salary - (((salary*30)/100) + ((((salary*30)/100)*40)/100) + ((salary * 10)/100))) as oa , (((salary - ((((salary*30)/100)*40)/100) )*10)/100) as incometax , (salary - (((salary - ((((salary*30)/100)*40)/100) )*10)/100)) as netpay  from employee where emp_id = "<%= session.getAttribute("empid") %>";
       </sql:query> 
+      
+           
+        
       
  <center>
 						<fieldset style="width: 70%">
@@ -488,14 +485,13 @@ html,body,h1,h2,h3,h4,h5,h6 {font-family: "Roboto", sans-serif}
 						<th class="orange-gradient">Income Tax</th>
 						<td align="center"><c:out value="${row.incometax}" /></td>
 						</tr>
+
 						
 						<tr >
 						<th class="orange-gradient">Net Pay</th>
 						<td align="center"><c:out value="${row.netpay}" /></td>
 						</tr>
-						
-						
-											 
+						 
 						</tbody>
 						</c:forEach>									
 								
@@ -507,6 +503,60 @@ html,body,h1,h2,h3,h4,h5,h6 {font-family: "Roboto", sans-serif}
 <br>
 </div>
 </div>    
+
+
+<div id="Project Details Pop" class="w3-modal">
+		<div class="w3-modal-content w3-animate-zoom">
+			<div class="w3-container w3-black w3-display-container">
+				<span
+					onclick="document.getElementById('Project Details Pop').style.display='none'"
+					class="w3-button w3-display-topright w3-large">x</span>
+				<h1>Project Details</h1>
+			</div>
+		
+		<sql:query dataSource = "${dbSource}" var = "timesheet" >
+           select task_name , project_id , num_of_hours , date , description  from time_sheet  where date = "2017-07-03" && emp_id = "<%= session.getAttribute("empid") %>"; 
+      </sql:query> 
+		
+		<center>
+		<br>
+		<br>
+							<div class="main-details">
+							<table width = "50%" border = "1">
+							 <thead>
+							<tr>
+							    <th class="orange-gradient">Task Name</th>
+								<th class="orange-gradient">Project ID</th>
+								<th class="orange-gradient">Hours</th>
+								<th class="orange-gradient">Date</th>
+								<th class="orange-gradient">Description</th>
+							</tr>
+						</thead>
+								<c:forEach var="row" items="${timesheet.rows}">
+						
+						<tbody>
+						
+						<tr >
+						<td align="center"><c:out value="${row.task_name}" /></td>
+						<td align="center"><c:out value="${row.project_id}" /></td>	
+						<td align="center"><c:out value="${row.num_of_hours}" /></td>
+						<td align="center"><c:out value="${row.date}" /></td>
+						<td align="center"><c:out value="${row.description}" /></td>
+						</tr>
+											 
+						</tbody>
+						</c:forEach>									
+								
+								</table>
+							</div>
+							<br><br>
+					</center>
+		</div>
+	</div>
+
+
+
+
   <!-- End Page Container -->
   
 <br><br><br><br><br><br><br><br><br>
@@ -520,6 +570,8 @@ html,body,h1,h2,h3,h4,h5,h6 {font-family: "Roboto", sans-serif}
   <i class="fa fa-linkedin w3-hover-opacity"></i>
   <p>Powered by Talent Sprint</a></p>
 </footer>
+
+
 
 </body>
 </html>

@@ -1,6 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-15"
     pageEncoding="ISO-8859-15"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+
+
 <html>
 <title>Login</title>
 <meta charset="UTF-8">
@@ -15,7 +17,7 @@
         var newpassword = document.getElementById("newpassword").value;
         var confirmpassword = document.getElementById("confirmpassword").value;
         if (newpassword != confirmpassword) {
-            alert("Passwords Do not match");
+            //alert("Passwords Do not match");
             document.getElementById("newpassword").style.borderColor = "#E34234";
             document.getElementById("confirmpassword").style.borderColor = "#E34234";
         }
@@ -24,7 +26,6 @@
         }
     }
 </script>
-
 <style>
 section {
     background-color:#f0f0f5;
@@ -41,11 +42,11 @@ section {
 <div class="w3-top">
   <div class="w3-bar w3-black w3-card-2" id="myNavbar">
 <a href="HomePage.html" class="w3-bar-item w3-button w3-wide"><img src="oooo.png" width="60px" height="50px">TreYsta unS</a>    <!-- Right-sided navbar links -->    
-    
-         <div class="w3-right w3-hide-small" align ="left">
-      <a href="Login.jsp"  class="w3-bar-item w3-button" id = "logout" onClick = "Logout" > <i class="fa fa-power-off fa-fw w3-margin-right w3-xxlarge w3-text-white"></i></a>
-  
-  </div>
+    <div class="w3-right w3-hide-small">
+      <a href="HomePage.html" class="w3-bar-item w3-button">ABOUT</a>
+      <a href="Login.jsp" class="w3-bar-item w3-button">LOGIN</a>
+      <a href="HomePage.html" class="w3-bar-item w3-button"><i class="fa fa-envelope"></i> CONTACT</a>
+    </div>
     <!-- Hide right-floated links on small screens and replace them with a menu icon -->
 
     <a href="javascript:void(0)" class="w3-bar-item w3-button w3-right w3-hide-large w3-hide-medium" onclick="w3_open()">
@@ -63,10 +64,10 @@ section {
 </nav>
 <br><br><br><br>
 
-  <h1 class="w3-center">CHANGE PASSWORD</h1>
+  <h1 class="w3-center">FORGOT PASSWORD</h1>
   
   <br>
-  <form name="f" action="ForgotRegisterServlet" method="post" onsubmit="return myFunction();">
+  <form  action="ForgotRegisterServlet" method="post" >
   <center><section align="center">
 <table align=center style="width:100%">
  
@@ -77,16 +78,29 @@ section {
     <td><input type="text" name="emp_id"></td>
     
   </tr> 
+  </tr>
   
-    <td>Old Password</td>
-    <td><input type="password" name="oldpassword" ></td>
+    <td>Security Question</td>
+    <td><input list="question" name="question">
+  <datalist id="question">
+    <option value="What was the name of your elementary / primary school?">
+    <option value="In what city or town does your nearest sibling live?">
+    <option value="What is your pet's name?">
+    <option value="What is your favorite book?">
+    <option value="What is your mother's name?">
+  </datalist></td>
    
-  </tr><br>
+  <tr align = center>
+    <td>Answer</td>
+    <td><input type="text" name="answer" ></td>
+    
+  </tr> 
+  
   <tr align = center>
     <td>New Password</td>
     <td><input type="password" name="newpassword" ></td>
     
-  </tr> 
+  </tr>  
   
   <tr align = center>
     <td>Confirm Password</td>
@@ -98,8 +112,10 @@ section {
 </table>
 <br>
 <br>
-<center><button id="change" type="submit" onclick="return myFunction()">Change</button></center>
+<center><button id="change" type="submit" onclick="return myFunction()">Save</button></center>
 </form>
+
+
 
  </section></center><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
  <footer class="w3-container w3-black w3-center w3-margin-top">

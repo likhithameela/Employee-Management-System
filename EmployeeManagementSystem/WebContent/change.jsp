@@ -12,10 +12,10 @@
 <%@page import="java.sql.*"%>
 <%@page import="java.io.*"%>
 <%
-String currentPassword=request.getParameter("oldpassword");
+String oldPassword=request.getParameter("oldpassword");
 String emp_id=request.getParameter("emp_id");
-String Newpass=request.getParameter("newpassword");
-String conpass=request.getParameter("confirmpassword");
+String newpassword=request.getParameter("newpassword");
+String confirmpassword=request.getParameter("confirmpassword");
 String connectionURL = "jdbc:mysql://localhost:3306/ems";
 Connection con=null;
 String pass="";
@@ -24,28 +24,22 @@ try{
 Class.forName("com.mysql.jdbc.Driver");
 con = DriverManager.getConnection(connectionURL, "root", "root");
 Statement st=con.createStatement();
-ResultSet rs=st.executeQuery("select emp_id , password from employee where emp_id = '"+emp_id+"' and password='"+currentPassword+"'");
+ResultSet rs=st.executeQuery("select emp_id , password from employee where emp_id = '"+emp_id+"' and password='"+oldPassword+"'");
 if(rs.next()){
 id=rs.getString(1);
 pass=rs.getString(2);
 }
 System.out.println(id+ " "+pass);
-if(pass.equals(currentPassword)){
+if(pass.equals(oldPassword)){
 Statement st1=con.createStatement();
-int i=st1.executeUpdate("update employee set password='"+Newpass+"' where emp_id='"+id+"'");
-out.println("Password changed successfully");
+int i=st1.executeUpdate("update employee set password= '" + newpassword + "' where emp_id='"+emp_id+"'");
+System.out.println("Password changed successfully");
 st1.close();
 con.close();
 }
-else if (!("Newpass").equals("conpass") ) {
-	out.println("New Password and Confirm Password should be same!! Please Re-enter passwords.");
-}
-else{
-out.println("Invalid Current Password");
-}
 }
 catch(Exception e){
-out.println(e);
+System.out.println(e);
 }
 %>
 

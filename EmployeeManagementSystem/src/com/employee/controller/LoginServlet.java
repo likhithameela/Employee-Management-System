@@ -33,6 +33,9 @@ public class LoginServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		response.getWriter().append("Served at: ").append(request.getContextPath());
+		HttpSession session = request.getSession();
+		session.removeAttribute("emp_id");
+		response.sendRedirect("Login.jsp");
 
 	}
 
@@ -59,7 +62,6 @@ public class LoginServlet extends HttpServlet {
         session.setAttribute("empid" , emp_id );
         //session.setAttribute("projectid", project_id);
         
-        
 		 
 		try
 		{
@@ -68,41 +70,31 @@ public class LoginServlet extends HttpServlet {
 		if(userValidate.equals("Admin"))
 		{
 		System.out.println("Admin");
-		 
-		/**HttpSession session = request.getSession(); //Creating a session
-		session.setAttribute("Admin", userName); //setting session attribute
-		request.setAttribute("userName", userName);*/
-		 
+		
 		request.getRequestDispatcher("AdminPage.jsp").forward(request, response);
+		
 		}
+		
 		else if(userValidate.equals("Manager"))
 		{
 		System.out.println("Manager's Page");
-		 
-		/**HttpSession session = request.getSession();
-		session.setAttribute("Editor", userName);
-		request.setAttribute("userName", userName);*/
-		 
 		request.getRequestDispatcher("ManagerPage.jsp").forward(request, response);
 		}
+		
 		else if(userValidate.equals("Clerk"))
 		{
-		System.out.println("Clerk's Page");
-		 
-		/**HttpSession session = request.getSession();
-		session.setMaxInactiveInterval(10*60);
-		session.setAttribute("Student", userName);
-		request.setAttribute("userName", userName);*/
-		 
+		System.out.println("Clerk's Page");	 	 
 		request.getRequestDispatcher("EmpPage.jsp").forward(request, response);
 		}
+		
 		else
 		{
 			out.println("<script type=\"text/javascript\">"); 
 			out.println("alert(\"Username or password incorrect!!!\")"); 
 			out.println("</script>"); 
-			response.sendRedirect("Login.html");
+			response.sendRedirect("Login.jsp");
 		}
+		
 		}
 		catch (IOException e1)
 		{
@@ -112,5 +104,10 @@ public class LoginServlet extends HttpServlet {
 		{
 		e2.printStackTrace();
 		}
+	}
+
+	private Object getSession(String string) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }

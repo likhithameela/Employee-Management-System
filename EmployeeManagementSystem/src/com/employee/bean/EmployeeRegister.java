@@ -20,6 +20,8 @@ public class EmployeeRegister {
 	private String salary;
 	private String leave;
 	private String password;
+	private String question;
+	private String answer;
 	
 	
 	public String getEmpID() {
@@ -140,7 +142,6 @@ public class EmployeeRegister {
 	public void setPassword(String password) {
 		this.password = password;
 	}
-	
     
     
 	public void saveData(LeaveSheet leavesheet) {

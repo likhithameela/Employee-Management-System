@@ -28,7 +28,7 @@ section {
 <a href="HomePage.html" class="w3-bar-item w3-button w3-wide"><img src="oooo.png" width="60px" height="50px">TreYsta unS</a>    <!-- Right-sided navbar links -->    
     <div class="w3-right w3-hide-small">
       <a href="HomePage.html" class="w3-bar-item w3-button">ABOUT</a>
-      <a href="Login.html" class="w3-bar-item w3-button">LOGIN</a>
+      <a href="Login.jsp" class="w3-bar-item w3-button">LOGIN</a>
       <a href="HomePage.html" class="w3-bar-item w3-button"><i class="fa fa-envelope"></i> CONTACT</a>
     </div>
     <!-- Hide right-floated links on small screens and replace them with a menu icon -->
@@ -69,7 +69,8 @@ section {
   </tr>
 </table>
 <br>
-<a href="ChangePassword.jsp">ChangePassword</a>
+<a href = "ForgotPassword.jsp">Forgot Password</a>
+<br>
 <br>
 <center><button id="EmpLogin" type="submit" onclick="">Login</button></center>
 </form>
