@@ -25,7 +25,7 @@
 		<!-- Right-sided navbar links -->
 		<div class="w3-right w3-hide-small" align="left">
 		   <div class="w3-right w3-hide-small">
-      <a href="ChangePassword" class="w3-bar-item w3-button">Change Password</a>
+      <a href="ChangePassword.jsp" class="w3-bar-item w3-button">Change Password</a>
 
     </div>
 			<a href="Login.jsp" id = "logout" class="w3-bar-item w3-button"> <i class="fa fa-power-off fa-fw w3-margin-right w3-xxlarge w3-text-white"></i></a>
@@ -475,6 +475,21 @@
   
   <!-- End Page Container -->
 </div>
+
+
+<%@page import="java.util.*" %>
+<%
+        try {
+        if (session.getAttribute("empid").equals("")) {
+        	request.getRequestDispatcher("AdminPagejsp").forward(request, response);
+        } else {
+        	request.getRequestDispatcher("Login.jsp").forward(request, response);
+        }
+        } catch (Exception e) {
+
+        }
+    %>
+
 <br><br><br><br><br>
 <footer class="w3-container w3-black w3-center  w3-margin-top">
   <i class="fa fa-facebook-official w3-hover-opacity"></i>

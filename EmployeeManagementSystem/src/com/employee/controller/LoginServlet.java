@@ -70,7 +70,10 @@ public class LoginServlet extends HttpServlet {
 		if(userValidate.equals("Admin"))
 		{
 		System.out.println("Admin");
-		
+		if(request.getSession(false) != null) {
+			session.invalidate();
+		}
+		request.getSession(true);
 		request.getRequestDispatcher("AdminPage.jsp").forward(request, response);
 		
 		}

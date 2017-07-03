@@ -37,7 +37,7 @@ html, body, h1, h2, h3, h4, h5, h6 {
 		<!-- Right-sided navbar links -->
 		<div class="w3-right w3-hide-small" align="left">
 		   <div class="w3-right w3-hide-small">
-      <a href="ChangePassword" class="w3-bar-item w3-button">Change Password</a>
+      <a href="ChangePassword.jsp" class="w3-bar-item w3-button">Change Password</a>
 
     </div>
 			<a href="Login.jsp" class="w3-bar-item w3-button"> <i class="fa fa-power-off fa-fw w3-margin-right w3-xxlarge w3-text-white"></i></a>

@@ -24,7 +24,7 @@ try{
 Class.forName("com.mysql.jdbc.Driver");
 con = DriverManager.getConnection(connectionURL, "root", "root");
 Statement st=con.createStatement();
-ResultSet rs=st.executeQuery("select emp_id , password from employee where emp_id = '"+emp_id+"' and password='"+oldPassword+"'");
+ResultSet rs=st.executeQuery("select emp_id , password from employee where emp_id = '"+emp_id+"' and password= MD5( '"+oldPassword+"') ");
 if(rs.next()){
 id=rs.getString(1);
 pass=rs.getString(2);
@@ -32,7 +32,7 @@ pass=rs.getString(2);
 System.out.println(id+ " "+pass);
 if(pass.equals(oldPassword)){
 Statement st1=con.createStatement();
-int i=st1.executeUpdate("update employee set password= '" + newpassword + "' where emp_id='"+emp_id+"'");
+int i=st1.executeUpdate("update employee set password= MD5( '" + newpassword + "') where emp_id='"+emp_id+"'");
 System.out.println("Password changed successfully");
 st1.close();
 con.close();

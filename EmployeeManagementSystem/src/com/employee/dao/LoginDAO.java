@@ -30,7 +30,7 @@ public class LoginDAO {
 	{
 	con = DataBaseUtility.getConnection();
 	statement = con.createStatement();
-	resultSet = statement.executeQuery("select designation , salary from employee where emp_id = '"+emp_id+"' AND password = '"+password+"' ");
+	resultSet = statement.executeQuery("select designation , salary from employee where emp_id = '"+emp_id+"' AND password = MD5('" + password + "') ");
 	
 	while(resultSet.next())
 	{

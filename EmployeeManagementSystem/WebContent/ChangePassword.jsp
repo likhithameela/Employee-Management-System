@@ -66,7 +66,7 @@ section {
   <h1 class="w3-center">CHANGE PASSWORD</h1>
   
   <br>
-  <form name="f" action="ForgotRegisterServlet" method="post" onsubmit="return myFunction();">
+  <form name="f" action="ChangePasswordServlet" method="post" onsubmit="return myFunction();">
   <center><section align="center">
 <table align=center style="width:100%">
  
