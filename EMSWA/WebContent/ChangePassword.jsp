@@ -8,10 +8,14 @@
    if(session.getAttribute("empid")== null) {
       response.sendRedirect(request.getContextPath() +"/Login.jsp");
    }
-  response.setHeader("Cache-Control","no-cache");
+
+response.setHeader("Cache-Control", "no-cache, no-store, must-revalidate"); // HTTP 1.1.
+response.setHeader("Pragma", "no-cache"); // HTTP 1.0.
+response.setDateHeader("Expires", 0); // Proxies.
+/**  response.setHeader("Cache-Control","no-cache");
   response.setHeader("Cache-Control","no-store");
   response.setHeader("Pragma","no-cache");
-  response.setDateHeader ("Expires", 0);
+  response.setDateHeader ("Expires", 0); */
  
 %>
 
@@ -63,10 +67,12 @@ section {
   <div class="w3-bar w3-black w3-card-2" id="myNavbar">
 <a href="HomePage.html" class="w3-bar-item w3-button w3-wide"><img src="oooo.png" width="60px" height="50px">TreYsta unS</a>    <!-- Right-sided navbar links -->    
     
+    <form method = "get" action = "LogoutServlet" >
          <div class="w3-right w3-hide-small" align ="left">
-      <a href="Login.jsp"  class="w3-bar-item w3-button" id = "logout" onClick = "Logout" > <i class="fa fa-power-off fa-fw w3-margin-right w3-xxlarge w3-text-white"></i></a>
+      <a class="w3-bar-item w3-button" id = "logout"  > <i class="fa fa-power-off fa-fw w3-margin-right w3-xxlarge w3-text-white"></i></a>
   
   </div>
+  </form>
     <!-- Hide right-floated links on small screens and replace them with a menu icon -->
 
     <a href="javascript:void(0)" class="w3-bar-item w3-button w3-right w3-hide-large w3-hide-medium" onclick="w3_open()">

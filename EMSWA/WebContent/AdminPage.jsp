@@ -245,7 +245,6 @@
     </div>
    <br>
   <center>  <button onclick="document.getElementById('Leave History Pop').style.display='block'"  class="button" id="Leave History">Leave History</button>
-        <button onclick="document.getElementById('Leaves Remaining Pop').style.display='block'"  class="button" id="Leaves Remaining">Leaves Remaining</button>
         <button onclick="document.getElementById('Apply Leave Pop').style.display='block'"  class="button" id="Apply Leave">Apply Leave</button><br> <br></center>
 
    
@@ -256,7 +255,16 @@
       <h1>Apply Leave</h1>
     </div>
    <br>
-   <form method = "post" action = "LeaveSheetServlet">
+   <form method = "post" action = "AdminLeaveSheetServlet">
+   <c:forEach var="row" items="${result.rows}">
+<tbody>
+<tr>
+<td align="center">Leaves Left:</td>
+<td align="center"><c:out value="${row.leaves}" /></td>
+</tr>
+</tbody>
+</table>
+</c:forEach>
 <table align=center style="width:65%">
   <tr align = center>
     <td>Category :</td>
@@ -272,7 +280,7 @@
  <td>From Date:</td>
  <td><input type="text" name="from_date"  placeholder = "yyyy/mm/dd">  </td>
  <td>To Date:</td> 
-  <td><input type="text" name="to_date"  placeholder = "yyyy//mm/dd">  </td>
+  <td><input type="text" name="to_date"  placeholder = "yyyy/mm/dd">  </td>
 </tr>  
 <tr>
    <td>Reason	 :</td>

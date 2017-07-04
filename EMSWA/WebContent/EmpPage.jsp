@@ -8,13 +8,17 @@
 <%@ page import = "java.sql.*" %>
 
 <%
-   if(session.getAttribute("empid")== null) {
-      response.sendRedirect(request.getContextPath() +"/ManagerPage.jsp");
+   if(session.getAttribute("empid") == null) {
+      response.sendRedirect(request.getContextPath() +"/EmpPage.jsp");
    }
+
+/**response.setHeader("Cache-Control", "no-cache, no-store, must-revalidate"); // HTTP 1.1.
+response.setHeader("Pragma", "no-cache"); // HTTP 1.0.
+response.setDateHeader("Expires", 0); // Proxies.*/
   response.setHeader("Cache-Control","no-cache");
   response.setHeader("Cache-Control","no-store");
   response.setHeader("Pragma","no-cache");
-  response.setDateHeader ("Expires", 0);
+  response.setDateHeader ("Expires", 0); 
  
 %>
 
@@ -35,6 +39,17 @@ html,body,h1,h2,h3,h4,h5,h6 {font-family: "Roboto", sans-serif}
      cursor: pointer;
     }
 </style>
+
+<script>
+function checkButtonStatus() {
+	if(document.getElementById("from_date").value.length == null) {
+		document.getElementById("button").disabled = false;
+	} else {
+		document.getElementById("button").disabled = true;
+	}
+}
+</script>
+
 <div class="w3-top">
 	<div class="w3-bar w3-black w3-card-2" id="myNavbar">
 		<a href="Home.html" class="w3-bar-item w3-button w3-wide"><img
@@ -46,8 +61,9 @@ html,body,h1,h2,h3,h4,h5,h6 {font-family: "Roboto", sans-serif}
       <a href="ChangePassword.jsp" class="w3-bar-item w3-button">Change Password</a>
 
     </div>
-			<a href="Login.jsp" class="w3-bar-item w3-button"> <i class="fa fa-power-off fa-fw w3-margin-right w3-xxlarge w3-text-white"></i></a>
-				
+    <form method = "get" action = "LogoutServlet">
+			<a class="w3-bar-item w3-button"> <i class="fa fa-power-off fa-fw w3-margin-right w3-xxlarge w3-text-white"></i></a>
+			</form>	
 		</div>
 	</div>
 </div>
@@ -359,10 +375,8 @@ html,body,h1,h2,h3,h4,h5,h6 {font-family: "Roboto", sans-serif}
 
 </table>
 <br>
-
-
 <br>
-<center><button type = "submit" align = center class="w3-button w3-black">Apply</button> </center>
+<center><button type = "submit" id = "button" onclick = "checkButtonStatus()" align = center class="w3-button w3-black">Apply</button> </center>
 </form>
 
 <!-- 

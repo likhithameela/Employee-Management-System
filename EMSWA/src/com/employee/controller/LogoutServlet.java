@@ -29,14 +29,15 @@ public class LogoutServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		 
+		String emp_id = request.getParameter("empID");
 		HttpSession session = request.getSession(false); //Fetch session object
 		 
 		if(session!=null) //If session is not null
 		{
 		session.invalidate(); //removes all session attributes bound to the session
+		session.setAttribute("emp_id" , null);
 		request.setAttribute("errMessage", "You have logged out successfully");
-		RequestDispatcher requestDispatcher = request.getRequestDispatcher("/JSP/Login.jsp");
+		RequestDispatcher requestDispatcher = request.getRequestDispatcher("Login.jsp");
 		requestDispatcher.forward(request, response);
 		System.out.println("Logged out");
 		}

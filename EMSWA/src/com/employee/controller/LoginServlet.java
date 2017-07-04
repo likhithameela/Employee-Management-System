@@ -93,6 +93,7 @@ public class LoginServlet extends HttpServlet {
 			out.println("alert(\"Username or password incorrect!!!\")"); 
 			out.println("</script>"); 
 			response.sendRedirect("Login.jsp");
+			session.invalidate();
 		}
 		
 		}

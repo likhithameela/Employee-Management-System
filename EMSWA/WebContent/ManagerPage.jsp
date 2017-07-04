@@ -336,9 +336,6 @@ html, body, h1, h2, h3, h4, h5, h6 {
 							onclick="document.getElementById('Leave History Pop').style.display='block'"
 							class="button" id="Leave History">Leave History</button>
 						<button
-							onclick="document.getElementById('Leaves Remaining Pop').style.display='block'"
-							class="button" id="Leaves Remaining">Leaves Remaining</button>
-						<button
 							onclick="document.getElementById('Apply Leave Pop').style.display='block'"
 							class="button" id="Apply Leave">Apply Leave</button>
 						<br> <br>
@@ -354,8 +351,19 @@ html, body, h1, h2, h3, h4, h5, h6 {
       <h1>Apply Leave</h1>
     </div>
    <br>
-   <form method = "post" action = "LeaveSheetServlet">
+   <form method = "post" action = "ManagerLeaveSheetServlet">
+   
+   <c:forEach var="row" items="${result.rows}">
+<tbody>
+<tr>
+<td align="center">Leaves Left:</td>
+<td align="center"><c:out value="${row.leaves}" /></td>
+</tr>
+</tbody>
+</table>
+</c:forEach>
 <table align=center style="width:65%">
+
   <tr align = center>
     <td>Category :</td>
     <td><input list="category" name="category">
@@ -394,7 +402,7 @@ html, body, h1, h2, h3, h4, h5, h6 {
 
 
 
-
+<!-- 
 			<div id="Leaves Remaining Pop" class="w3-modal">
 				<div class="w3-modal-content w3-animate-zoom">
 					<div class="w3-container w3-black w3-display-container">
@@ -443,7 +451,7 @@ html, body, h1, h2, h3, h4, h5, h6 {
 	</div>
 	</div>
 
-
+ -->
 
 
 	<div id="Leave History Pop" class="w3-modal">
@@ -662,11 +670,8 @@ html, body, h1, h2, h3, h4, h5, h6 {
 		</div>
 	</div>
 
-	</div>
-	</div>
-	<!------>
-	</div>
-	</div>
+
+	 
 
 	<!------>
 	<!-- End Right Column -->
