@@ -73,7 +73,7 @@ public class LeaveSheet {
 			}*/
 			if(leaves != 0) {
 				statement.executeUpdate("insert into leave_sheet values('"+getCategory()+"','"+getFromDate()+"','"+getToDate()+"','"+getReason()+"','"+getEmp_id()+"')");
-				statement.executeUpdate("update employee set leaves = leaves - DATEDIFF('"+getToDate()+"' , '"+getFromDate()+"') where emp_id = '"+emp_id+"' ");
+				//statement.executeUpdate("update employee set leaves = leaves - DATEDIFF('"+getToDate()+"' , '"+getFromDate()+"') where emp_id = '"+emp_id+"' ");
 				JOptionPane.showMessageDialog(null, "Succesfully Applied ");
 				System.out.println("Succesfully Applied Leave");
 			}

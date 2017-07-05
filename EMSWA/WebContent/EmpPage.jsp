@@ -61,9 +61,7 @@ function checkButtonStatus() {
       <a href="ChangePassword.jsp" class="w3-bar-item w3-button">Change Password</a>
 
     </div>
-    <form method = "get" action = "LogoutServlet">
-			<a class="w3-bar-item w3-button"> <i class="fa fa-power-off fa-fw w3-margin-right w3-xxlarge w3-text-white"></i></a>
-			</form>	
+			<a href = "Login.jsp" class="w3-bar-item w3-button"> <i class="fa fa-power-off fa-fw w3-margin-right w3-xxlarge w3-text-white"></i></a>
 		</div>
 	</div>
 </div>

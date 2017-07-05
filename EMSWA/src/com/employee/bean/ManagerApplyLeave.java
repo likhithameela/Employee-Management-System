@@ -15,6 +15,25 @@ public class ManagerApplyLeave {
 	private String toDate;
 	private String reason;
 	private String emp_id;
+	private String approved;
+	private String disapproved;
+	
+	
+	public String getApproved() {
+		return approved;
+	}
+	
+	public void setApproved(String approved) {
+		this.approved = approved;
+	}
+	
+	public String getDispproved() {
+		return disapproved;
+	}
+	
+	public void setDispproved(String disapproved) {
+		this.disapproved = disapproved;
+	}
 	
 	public String getCategory() {
 		return category;
@@ -64,7 +83,7 @@ public class ManagerApplyLeave {
 			System.out.println("fromdate" + fromdate);
 			System.out.println("todate" + todate);
 			if(leaves != 0) {
-				statement.executeUpdate("insert into leave_sheet values('"+getCategory()+"','"+getFromDate()+"','"+getToDate()+"','"+getReason()+"','"+getEmp_id()+"')");
+				statement.executeUpdate("insert into leave_sheet values('"+getCategory()+"','"+getFromDate()+"','"+getToDate()+"','"+getReason()+"','"+getEmp_id()+"' , '"+getApproved()+"')");
 				statement.executeUpdate("update employee set leaves = leaves - DATEDIFF('"+getToDate()+"' , '"+getFromDate()+"') where emp_id = '"+emp_id+"' ");
 				JOptionPane.showMessageDialog(null, "Succesfully Applied ");
 			}

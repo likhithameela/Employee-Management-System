@@ -8,20 +8,21 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
-import com.employee.bean.ManagerApplyLeave;
+import com.employee.bean.Approval;
 
 /**
- * Servlet implementation class ManagerLeaveSheetServlet
+ * Servlet implementation class ApprovalServlet
  */
-@WebServlet("/ManagerLeaveSheetServlet")
-public class ManagerLeaveSheetServlet extends HttpServlet {
+@WebServlet("/ApprovalServlet")
+public class ApprovalServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public ManagerLeaveSheetServlet() {
+    public ApprovalServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -38,27 +39,43 @@ public class ManagerLeaveSheetServlet extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-response.setContentType("text/html");
 		
-		String category = request.getParameter("category");
-		String fromDate = request.getParameter("from_date");
-		String toDate = request.getParameter("to_date");
-		String reason = request.getParameter("Reason");
-		String emp_id = request.getParameter("empid");
-		String approved = request.getParameter("approved");
-		String disapproved = request.getParameter("disapproved");
-		System.out.println(emp_id);
+		/**String approved = request.getParameter("approval");
+		String disapproved = request.getParameter("approval");
+		System.out.println(approved);
+		System.out.println(disapproved);
 		
-		ManagerApplyLeave ls = new ManagerApplyLeave();
-		ls.setCategory(category);
-		ls.setFromDate(fromDate);
-		ls.setToDate(toDate);
-		ls.setReason(reason);
-		ls.setEmp_id(emp_id);
-		ls.saveData();
+		Approval approve = new Approval();
+		approve.setApproved("approved");
+		approve.setDisapproved("disapproved");
+		approve.saveData();
+		System.out.println("in servlet");
+		
+		RequestDispatcher rd = request.getRequestDispatcher("ManagerPage.jsp");
+		rd.forward(request, response);*/
+		
+		HttpSession session = request.getSession();
+		String row = (String) session.getAttribute("value");
+		
+		String approval = request.getParameter("gender");
+		System.out.println(approval);
+		
+		Approval approve = new Approval();
+		approve.setApproved(approval);
+		approve.setEmpID(row);
+		approve.saveData();
 		
 		RequestDispatcher rd = request.getRequestDispatcher("ManagerPage.jsp");
 		rd.forward(request, response);
+
+		
 	}
 
 }
+
+
+
+
+
+
+

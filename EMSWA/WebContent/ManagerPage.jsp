@@ -334,7 +334,10 @@ html, body, h1, h2, h3, h4, h5, h6 {
 					<center>
 						<button
 							onclick="document.getElementById('Leave History Pop').style.display='block'"
-							class="button" id="Leave History">Leave History</button>
+							class="button" id="Leave History">Leave Approval</button>
+						<button
+							onclick="document.getElementById('Leaves Remaining Pop').style.display='block'"
+							class="button" id="Leaves Remaining">Leaves Remaining</button>
 						<button
 							onclick="document.getElementById('Apply Leave Pop').style.display='block'"
 							class="button" id="Apply Leave">Apply Leave</button>
@@ -351,19 +354,8 @@ html, body, h1, h2, h3, h4, h5, h6 {
       <h1>Apply Leave</h1>
     </div>
    <br>
-   <form method = "post" action = "ManagerLeaveSheetServlet">
-   
-   <c:forEach var="row" items="${result.rows}">
-<tbody>
-<tr>
-<td align="center">Leaves Left:</td>
-<td align="center"><c:out value="${row.leaves}" /></td>
-</tr>
-</tbody>
-</table>
-</c:forEach>
+   <form method = "post" action = "LeaveSheetServlet">
 <table align=center style="width:65%">
-
   <tr align = center>
     <td>Category :</td>
     <td><input list="category" name="category">
@@ -402,7 +394,7 @@ html, body, h1, h2, h3, h4, h5, h6 {
 
 
 
-<!-- 
+
 			<div id="Leaves Remaining Pop" class="w3-modal">
 				<div class="w3-modal-content w3-animate-zoom">
 					<div class="w3-container w3-black w3-display-container">
@@ -451,7 +443,7 @@ html, body, h1, h2, h3, h4, h5, h6 {
 	</div>
 	</div>
 
- -->
+
 
 
 	<div id="Leave History Pop" class="w3-modal">
@@ -460,44 +452,57 @@ html, body, h1, h2, h3, h4, h5, h6 {
 				<span
 					onclick="document.getElementById('Leave History Pop').style.display='none'"
 					class="w3-button w3-display-topright w3-large">x</span>
-				<h2>Leave History</h2>
+				<h2>Leave Approval</h2>
 			</div>
 			<br><br>
 			<sql:query dataSource = "${dbSource}" var = "leave" >
-           select  category , from_date , to_date from leave_sheet where emp_id = "<%= session.getAttribute("empid") %>";
+select ls.from_date as fromdate , ls.to_date as todate , ls.reason as reason , ls.emp_id as empid from leave_sheet ls
+INNER JOIN employee emp on ls.emp_id = emp.emp_id where emp.emp_id IN (select emp.emp_id from employee emp where manager_id = "<%= session.getAttribute("empid") %>");
       </sql:query>
       
-      <center><fieldset style="width:50%">
-				<legend>Leave History</legend>
+      <center><fieldset style="width:70%">
 				<div class="main-details">
+				<form action = "ApprovalServlet" method = "post">
 					<table border="0" class="" width="100%" cellspacing="0" cellpadding="0"> 
-					<c:forEach var="row" items="${leave.rows}">
-						<thead>
+					<thead>
 							<tr>
-								<th class="orange-gradient">Category</th>
+							    <th class="orange-gradient">Employee ID</th>
 								<th class="orange-gradient">From Date</th>
 								<th class="orange-gradient">To Date</th>
+								<th class="orange-gradient">Reason</th>
+								
 							</tr>
 						</thead>
+					<c:forEach var="row" items="${leave.rows}">
+						
 						
 						<tbody>
 						
-						<tr >
-						<td align="center"><c:out value="${row.category}" /></td>	
-						<td align="center"><c:out value="${row.from_date}" /></td>
-						<td align="center"><c:out value="${row.to_date}" /></td>
+						<tr >	
+						<td align="center"><c:out value="${row.empid}" /></td>
+						<td align="center"><c:out value="${row.fromdate}" /></td>
+						<td align="center"><c:out value="${row.todate}" /></td>
+			            <td align="center"><c:out value="${row.reason}" /></td>
+			            
+			            <td align = "center"><input type = "radio"  name = "gender" value = "approved">Approved</input></td>
+			            <td align = "center"><input type = "radio"  name = "gender" value = "disapproved" >Disapproved</input></td>
+			            
 						</tr>
 											 
 						</tbody>
 						
 						</c:forEach>
 					</table> </div> 
-					</fieldset> </center>
+					</fieldset>
+					<center><button type="submit" align = center class="w3-button w3-black ">Submit</button> </center>
+					</form>
+					 </center>
+					<br><br>
 			
 		</div>
 	</div>
 
-
+<br><br><br>
 
 	<!---PayRoll Pop-->
 	<div id="PayRoll Pop" class="w3-modal">
@@ -670,8 +675,11 @@ html, body, h1, h2, h3, h4, h5, h6 {
 		</div>
 	</div>
 
-
-	 
+	</div>
+	</div>
+	<!------>
+	</div>
+	</div>
 
 	<!------>
 	<!-- End Right Column -->
