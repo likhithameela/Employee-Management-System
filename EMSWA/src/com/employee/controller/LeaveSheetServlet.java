@@ -63,7 +63,6 @@ public class LeaveSheetServlet extends HttpServlet {
 		ls.setReason(reason);
 		ls.setEmp_id(emp_id);
 		ls.saveData();
-        
 		RequestDispatcher rd = request.getRequestDispatcher("EmpPage.jsp");
 		rd.forward(request, response);
 	}

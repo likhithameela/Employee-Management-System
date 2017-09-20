@@ -6,6 +6,7 @@ import java.io.PrintWriter;
 import com.employee.bean.LoginBean;
 import com.employee.dao.LoginDAO;
 
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -87,13 +88,21 @@ public class LoginServlet extends HttpServlet {
 		request.getRequestDispatcher("EmpPage.jsp").forward(request, response);
 		}
 		
-		else
+		/*else
 		{
 			out.println("<script type=\"text/javascript\">"); 
 			out.println("alert(\"Username or password incorrect!!!\")"); 
 			out.println("</script>"); 
 			response.sendRedirect("Login.jsp");
 			session.invalidate();
+		}*/
+		
+		else
+		{
+		   out.println("<script type=\"text/javascript\">");
+		   out.println("alert('User or password incorrect');");
+		   out.println("location='Login.jsp';");
+		   out.println("</script>");
 		}
 		
 		}

@@ -1,22 +1,24 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-15"
 	pageEncoding="ISO-8859-15"%>
 
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/sql" prefix="sql"%>
+	<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+	<%@ taglib uri="http://java.sun.com/jsp/jstl/sql" prefix="sql"%>
 
-<%@ page import="com.employee.bean.LoginBean"%>
+<%@ page import = "com.employee.bean.LoginBean"%>
 <%@ page import="java.sql.*"%>
 
 <%
-   if(session.getAttribute("empid")== null) {
+   if(session.getAttribute("empid") == null) {
       response.sendRedirect(request.getContextPath() +"/ManagerPage.jsp");
    }
+
   response.setHeader("Cache-Control","no-cache");
   response.setHeader("Cache-Control","no-store");
   response.setHeader("Pragma","no-cache");
-  response.setDateHeader ("Expires", 0);
+  response.setDateHeader ("Expires", 0); 
  
 %>
+
 
 
 <!DOCTYPE html>
@@ -332,12 +334,15 @@ html, body, h1, h2, h3, h4, h5, h6 {
 					</div>
 					<br>
 					<center>
+					 
 						<button
 							onclick="document.getElementById('Leave History Pop').style.display='block'"
-							class="button" id="Leave History">Leave Approval</button>
+							class="button" id="Leave History">Leave History</button> 
+							<!-- 
 						<button
 							onclick="document.getElementById('Leaves Remaining Pop').style.display='block'"
-							class="button" id="Leaves Remaining">Leaves Remaining</button>
+							class="button" id="Leaves Remaining">Leave Approval</button>
+							 -->
 						<button
 							onclick="document.getElementById('Apply Leave Pop').style.display='block'"
 							class="button" id="Apply Leave">Apply Leave</button>
@@ -354,11 +359,33 @@ html, body, h1, h2, h3, h4, h5, h6 {
       <h1>Apply Leave</h1>
     </div>
    <br>
-   <form method = "post" action = "LeaveSheetServlet">
+   <form method = "post" action = "ManagerLeaveSheetServlet">
+   <a href = "mailto:" enctype = "text/plain" >
 <table align=center style="width:65%">
+
+<center>
+
+<c:forEach var="row" items="${result.rows}">
+						<tbody>
+					
+					
+												<tr >
+						
+							<td align="center">Leaves Remaining</td>	
+							<td align="center"><c:out value="${row.leaves}" /></td>
+						
+						</tr>
+					
+												 
+						</tbody>
+						</c:forEach>
+
+</center>
+
+
   <tr align = center>
     <td>Category :</td>
-    <td><input list="category" name="category">
+    <td><input list="category" name="category" required>
       <datalist id="category">
        <option value="cl">
        <option value = "sl">
@@ -368,13 +395,13 @@ html, body, h1, h2, h3, h4, h5, h6 {
 
 <tr>
  <td>From Date:</td>
- <td><input type="text" name="from_date"  placeholder = "yyyy/mm/dd">  </td>
+ <td><input type="text" name="from_date"  placeholder = "yyyy/mm/dd" required>  </td>
  <td>To Date:</td> 
-  <td><input type="text" name="to_date"  placeholder = "yyyy//mm/dd">  </td>
+  <td><input type="text" name="to_date"  placeholder = "yyyy//mm/dd" required>  </td>
 </tr>  
 <tr>
    <td>Reason	 :</td>
-   <td><input type="text" name="Reason"  placeholder = "">  </td>
+   <td><input type="text" name="Reason"  placeholder = "" required>  </td>
 </tr>
 
 <tr>
@@ -383,7 +410,8 @@ html, body, h1, h2, h3, h4, h5, h6 {
 
 </table>
 <br>
-<center><button type="submit" align = center class="w3-button w3-black ">Apply</button> </center>
+<center><button type="submit" align = center class="w3-button w3-black ">Apply</button></center>
+</a>
 </form>
 
 </div>
@@ -393,6 +421,41 @@ html, body, h1, h2, h3, h4, h5, h6 {
 </div>
 
 
+    <div id="Leave History Pop" class="w3-modal">
+  <div class="w3-modal-content w3-animate-zoom">
+    <div class="w3-container w3-black w3-display-container">
+      <span onclick="document.getElementById('Leave History Pop').style.display='none'" class="w3-button w3-display-topright w3-large">x</span>
+      <h2>Leave History</h2>
+    </div>
+    <br><br>
+     <sql:query dataSource = "${dbSource}" var = "leave" >
+           select  category , from_date , to_date from leave_sheet where emp_id = "<%= session.getAttribute("empid") %>";
+      </sql:query>
+      
+      <center>
+			<form>
+				<table border="1" width="40%">
+					<caption><h3>Leave History</h3></caption>
+					<tr>
+						<th>Category</th>
+						<th>From Date</th>
+						<th>To Date</th>
+					</tr>
+					<c:forEach var="row" items="${leave.rows}">
+						<tr>
+							<td><c:out value="${row.category}" /></td>
+							<td><c:out value="${row.from_date}" /></td>
+							<td><c:out value="${row.to_date}" /></td>
+						</tr>
+					</c:forEach>
+				</table>
+	</div>
+	</form>
+	</center>
+      <br><br><br><br><br><br>
+      
+      </div>
+      </div>
 
 
 			<div id="Leaves Remaining Pop" class="w3-modal">
@@ -445,7 +508,6 @@ html, body, h1, h2, h3, h4, h5, h6 {
 
 
 
-
 	<div id="Leave History Pop" class="w3-modal">
 		<div class="w3-modal-content w3-animate-zoom">
 			<div class="w3-container w3-black w3-display-container">
@@ -456,13 +518,12 @@ html, body, h1, h2, h3, h4, h5, h6 {
 			</div>
 			<br><br>
 			<sql:query dataSource = "${dbSource}" var = "leave" >
-select ls.from_date as fromdate , ls.to_date as todate , ls.reason as reason , ls.emp_id as empid from leave_sheet ls
-INNER JOIN employee emp on ls.emp_id = emp.emp_id where emp.emp_id IN (select emp.emp_id from employee emp where manager_id = "<%= session.getAttribute("empid") %>");
+select ls.from_date as fromdate , ls.to_date as todate , ls.reason as reason , ls.emp_id as empid from leave_sheet ls INNER JOIN employee emp on ls.emp_id = emp.emp_id where emp.emp_id IN (select emp.emp_id from employee emp where manager_id = "<%= session.getAttribute("empid") %>");
       </sql:query>
       
       <center><fieldset style="width:70%">
 				<div class="main-details">
-				<form action = "ApprovalServlet" method = "post">
+				<form action = "ApprovalServlet" method = "post" scope = "request" >
 					<table border="0" class="" width="100%" cellspacing="0" cellpadding="0"> 
 					<thead>
 							<tr>
@@ -487,11 +548,21 @@ INNER JOIN employee emp on ls.emp_id = emp.emp_id where emp.emp_id IN (select em
 			            <td align = "center"><input type = "radio"  name = "gender" value = "approved">Approved</input></td>
 			            <td align = "center"><input type = "radio"  name = "gender" value = "disapproved" >Disapproved</input></td>
 			            
+
 						</tr>
 											 
 						</tbody>
 						
 						</c:forEach>
+<c:url value = "ApprovalServlet" var = "row" >
+   <c:param name = "empid" value = "${row.empid}"/>
+</c:url>
+<c:import url = "${row}"/>
+						
+   
+    
+						
+						
 					</table> </div> 
 					</fieldset>
 					<center><button type="submit" align = center class="w3-button w3-black ">Submit</button> </center>
@@ -501,7 +572,6 @@ INNER JOIN employee emp on ls.emp_id = emp.emp_id where emp.emp_id IN (select em
 			
 		</div>
 	</div>
-
 <br><br><br>
 
 	<!---PayRoll Pop-->

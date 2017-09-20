@@ -70,11 +70,6 @@ public class ManagerApplyLeave {
 		try {
 			connection = DataBaseUtility.getConnection();
 			Statement statement = connection.createStatement();
-			int leaves = 0;
-			ResultSet rs=statement.executeQuery("select leaves from employee where emp_id = '"+emp_id+"' ");
-			if(rs.next()){
-			leaves=rs.getInt(1);
-			}
 			System.out.println(getReason());
 			String emp_id = getEmp_id();
 			String fromdate = getFromDate();
@@ -82,13 +77,46 @@ public class ManagerApplyLeave {
 			System.out.println(emp_id);
 			System.out.println("fromdate" + fromdate);
 			System.out.println("todate" + todate);
+			
+			int leaves = 0;
+			String approve = "";
+			String from_date = "";
+			String to_date = "";
+			ResultSet rs=statement.executeQuery("select leaves from employee  where emp_id = '"+emp_id+"' ");
+			if(rs.next()){
+			leaves=rs.getInt(1);
+			}
+			
+			ResultSet resultset=statement.executeQuery("select approved , from_date , to_date from leave_sheet where emp_id = '"+emp_id+"' ");
+			if(resultset.next()){
+			approve=resultset.getString(1);
+			from_date = resultset.getString(2);
+			to_date = resultset.getString(3);
+			}
+			
+			if(approve.equals(getApproved())) {
+				statement.executeUpdate("update employee set leaves = leaves - DATEDIFF(to_date , from_date) where emp_id = '"+emp_id+"' ");
+				System.out.println("leaves deducted in employee table");
+			}
+			
+			/**
+			String approved = "";
+			ResultSet resultset=statement.executeQuery("select approved from leave_sheet where emp_id = '"+emp_id+"' ");
+			if(resultset.next()){
+			approved=resultset.getString(1);
+			}
+
+			if(approved.equalsIgnoreCase(approved)) {
+				statement.executeUpdate("update employee set leaves = leaves - DATEDIFF('"+getToDate()+"' , '"+getFromDate()+"') where emp_id = '"+emp_id+"' ");
+			}
+			*/
+			
 			if(leaves != 0) {
 				statement.executeUpdate("insert into leave_sheet values('"+getCategory()+"','"+getFromDate()+"','"+getToDate()+"','"+getReason()+"','"+getEmp_id()+"' , '"+getApproved()+"')");
-				statement.executeUpdate("update employee set leaves = leaves - DATEDIFF('"+getToDate()+"' , '"+getFromDate()+"') where emp_id = '"+emp_id+"' ");
-				JOptionPane.showMessageDialog(null, "Succesfully Applied ");
+				//JOptionPane.showMessageDialog(null, "Succesfully Applied ");
 			}
 			if (leaves == 0) {
-				JOptionPane.showMessageDialog(null, "No Leaves Left ");
+				//JOptionPane.showMessageDialog(null, "No Leaves Left ");
 			}
 			System.out.println("executing");
 		}catch (SQLException e) {

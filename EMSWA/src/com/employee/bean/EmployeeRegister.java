@@ -152,7 +152,7 @@ public class EmployeeRegister {
 			Statement statement = connection.createStatement();
 			System.out.println(getEmpID());
 			System.out.println(getName());
-			statement.executeUpdate("insert into employee values('"+getEmpID()+"','"+getName()+"','"+getDateOfBirth()+"','"+getGender()+"','"+getPhone()+"','"+getEmail()+"','"+getAddress()+"','"+getDesignation()+"','"+getMangID()+"','"+getSalary()+"', 30 ,'"+getPassword()+"')");
+			statement.executeUpdate("insert into employee values('"+getEmpID()+"','"+getName()+"','"+getDateOfBirth()+"','"+getGender()+"','"+getPhone()+"','"+getEmail()+"','"+getAddress()+"','"+getDesignation()+"','"+getMangID()+"','"+getSalary()+"', 30 , MD5('trustus') , '' , '') ");
          
 			System.out.println("executing");
 		}catch (SQLException e) {

@@ -9,19 +9,19 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.employee.bean.ManagerApplyLeave;
+import com.employee.bean.LeaveApproval;
 
 /**
- * Servlet implementation class ManagerLeaveSheetServlet
+ * Servlet implementation class LeaveApprovalServlet
  */
-@WebServlet("/ManagerLeaveSheetServlet")
-public class ManagerLeaveSheetServlet extends HttpServlet {
+@WebServlet("/LeaveApprovalServlet")
+public class LeaveApprovalServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public ManagerLeaveSheetServlet() {
+    public LeaveApprovalServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -38,27 +38,17 @@ public class ManagerLeaveSheetServlet extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-response.setContentType("text/html");
+		System.out.println("IN SERVLET");
+		String id = request.getParameter("id");
 		
-		String category = request.getParameter("category");
-		String fromDate = request.getParameter("from_date");
-		String toDate = request.getParameter("to_date");
-		String reason = request.getParameter("Reason");
-		String emp_id = request.getParameter("empid");
-		String approved = request.getParameter("gender");
-		System.out.println(emp_id);
+		LeaveApproval la = new LeaveApproval();
+        
+		la.setId(id);
+		la.saveData();
 		
-		ManagerApplyLeave ls = new ManagerApplyLeave();
-		ls.setCategory(category);
-		ls.setFromDate(fromDate);
-		ls.setToDate(toDate);
-		ls.setReason(reason);
-		ls.setEmp_id(emp_id);
-		ls.setApproved(approved);
-		ls.saveData();
-		
-		RequestDispatcher rd = request.getRequestDispatcher("ManagerPage.jsp");
+		RequestDispatcher rd = request.getRequestDispatcher("LeaveApproval.jsp");
 		rd.forward(request, response);
+
 	}
 
 }

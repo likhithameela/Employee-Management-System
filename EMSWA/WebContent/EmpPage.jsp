@@ -12,9 +12,6 @@
       response.sendRedirect(request.getContextPath() +"/EmpPage.jsp");
    }
 
-/**response.setHeader("Cache-Control", "no-cache, no-store, must-revalidate"); // HTTP 1.1.
-response.setHeader("Pragma", "no-cache"); // HTTP 1.0.
-response.setDateHeader("Expires", 0); // Proxies.*/
   response.setHeader("Cache-Control","no-cache");
   response.setHeader("Cache-Control","no-store");
   response.setHeader("Pragma","no-cache");
@@ -39,16 +36,6 @@ html,body,h1,h2,h3,h4,h5,h6 {font-family: "Roboto", sans-serif}
      cursor: pointer;
     }
 </style>
-
-<script>
-function checkButtonStatus() {
-	if(document.getElementById("from_date").value.length == null) {
-		document.getElementById("button").disabled = false;
-	} else {
-		document.getElementById("button").disabled = true;
-	}
-}
-</script>
 
 <div class="w3-top">
 	<div class="w3-bar w3-black w3-card-2" id="myNavbar">
@@ -91,11 +78,14 @@ function checkButtonStatus() {
         
         <sql:setDataSource var = "dbSource" driver = "com.mysql.jdbc.Driver"
          url = "jdbc:mysql://localhost/ems" user = "root"  password = "root"/>
+         
       <sql:query dataSource = "${dbSource}" var = "result" >
            select emp_name , designation , address , email , contact , leaves , salary from employee where emp_id = "<%= session.getAttribute("empid") %>";
       </sql:query>
       
-      
+      <sql:query dataSource = "${dbSource}" var = "sendmail" >
+			select b.email as email from employee b JOIN employee e on b.emp_id = e.manager_id and e.emp_id = "<%= session.getAttribute("empid") %>";
+      </sql:query>
       
 				<table >
 					
@@ -118,8 +108,6 @@ function checkButtonStatus() {
 					</c:forEach>
 				</table>
 	</div>
-	
-	
 
     <!-- End Left Column -->
     </div>
@@ -311,42 +299,42 @@ function checkButtonStatus() {
     </div>
    <br>
    
-  <center>  <button onclick="document.getElementById('Leave History Pop').style.display='block'"  class="button" id="Leave History">Leave History</button>
+  <center>
+        <button onclick="document.getElementById('Leave History Pop').style.display='block'"  class="button" id="Leave History">Leave History</button>
         <button onclick="document.getElementById('Apply Leave Pop').style.display='block'"  class="button" id="Apply Leave">Apply Leave</button><br> <br></center>
 
    
-<div id="Apply Leave Pop" class="w3-modal">+.
+<div id="Apply Leave Pop" class="w3-modal">
   <div class="w3-modal-content w3-animate-zoom">
     <div class="w3-container w3-black w3-display-container">
       <span onclick="document.getElementById('Apply Leave Pop').style.display='none'" class="w3-button w3-display-topright w3-large">x</span>
       <h1>Apply Leave</h1>
     </div>
    <br>
-     <form method = "post" action = "LeaveSheetServlet"> 
+     <form id="profileForm" method = "post" action = "LeaveSheetServlet"> 
 <table align=center style="width:65%">
 
-<center>
-
 <c:forEach var="row" items="${result.rows}">
-						<tbody>
-					
-					
-												<tr >
-						
-							<td align="center">Leaves Remaining</td>	
-							<td align="center"><c:out value="${row.leaves}" /></td>
-						
-						</tr>
-					
-												 
-						</tbody>
-						</c:forEach>
+	<tbody>				
+		<tr >		
+			<td align="center">Leaves Remaining</td>	
+			<td align="center"><c:out value="${row.leaves}" /></td>
+		</tr>
+	</tbody>
+</c:forEach>
 
-</center>
-
+<c:forEach var="row" items="${sendmail.rows}">
+	<tbody>				
+		<tr >		
+			<td align="center">Manager Email</td>	
+			<td align="center"><c:out value="${row.email}" /></td>
+		</tr>
+	</tbody>
+</c:forEach>
+						
   <tr align = center>
     <td>Category :</td>
-    <td><input list="category" name="category">
+    <td><input list="category" name="category" required>
       <datalist id="category">
        <option value="cl">
        <option value = "sl">
@@ -354,17 +342,15 @@ function checkButtonStatus() {
    </td> 
 </tr>
 
-
-
 <tr>
  <td>From Date:</td>
- <td><input type="text" name="from_date"  placeholder = "yyyy/mm/dd">  </td>
+ <td><input type="text" class = "form-control" name="from_date"  placeholder = "yyyy/mm/dd" required>  </td>
  <td>To Date:</td> 
-  <td><input type="text" name="to_date"  placeholder = "yyyy/mm/dd">  </td>
+  <td><input type="text" name="to_date"  placeholder = "yyyy/mm/dd" required>  </td>
 </tr>  
 <tr>
    <td>Reason	 :</td>
-   <td><input type="text" name="Reason"  placeholder = "">  </td>
+   <td><input type="text" name="Reason"  placeholder = "" required>  </td>
 </tr>
 
 <tr>
@@ -374,10 +360,41 @@ function checkButtonStatus() {
 </table>
 <br>
 <br>
-<center><button type = "submit" id = "button" onclick = "checkButtonStatus()" align = center class="w3-button w3-black">Apply</button> </center>
+
+<center>
+<button type = "submit" id = "button" onclick = "" align = center class="w3-button w3-black" >
+Apply
+</button>
+
+</center>
+
 </form>
 
-<!-- 
+<script>
+$(document).ready(function() {
+    $('#profileForm').formValidation({
+        framework: 'bootstrap',
+        icon: {
+            valid: 'glyphicon glyphicon-ok',
+            invalid: 'glyphicon glyphicon-remove',
+            validating: 'glyphicon glyphicon-refresh'
+        },
+        fields: {
+            birthday: {
+                validators: {
+                    date: {
+                        format: 'YYYY/MM/DD',
+                        message: 'The value is not a valid date'
+                    }
+                }
+            }
+        }
+    });
+});
+
+
+
+ 
     <input type="text" id="email"></input>
     <input type="text" id="subject"></input>
     <button onclick="myFunction()">Click me</button>
@@ -394,7 +411,7 @@ function checkButtonStatus() {
         window.location.href = "mailto:" + email + "?subject=" + subject;
       }
     </script>
-  -->
+
 </div>
 
 </div>
@@ -581,6 +598,7 @@ function checkButtonStatus() {
 			<% java.util.Date now = new java.util.Date();
 			System.out.println(now);
 			%>
+		
 		
 		<sql:query dataSource = "${dbSource}" var = "timesheet" >
            select task_name , project_id , num_of_hours , date , description  from time_sheet  where emp_id = "<%= session.getAttribute("empid") %>" ORDER BY date DESC; 

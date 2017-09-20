@@ -55,7 +55,7 @@ public class ApprovalServlet extends HttpServlet {
 		rd.forward(request, response);*/
 		
 		HttpSession session = request.getSession();
-		String row = (String) session.getAttribute("value");
+		Object row = request.getSession().getAttribute("empid");
 		
 		String approval = request.getParameter("gender");
 		System.out.println(approval);

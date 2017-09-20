@@ -8,15 +8,17 @@
 <%@ page import = "java.sql.*" %>
 
    <%
-   if(session.getAttribute("empid")== null) {
+   if(session.getAttribute("empid") == null) {
       response.sendRedirect(request.getContextPath() +"/AdminPage.jsp");
    }
+
   response.setHeader("Cache-Control","no-cache");
   response.setHeader("Cache-Control","no-store");
   response.setHeader("Pragma","no-cache");
-  response.setDateHeader ("Expires", 0);
+  response.setDateHeader ("Expires", 0); 
  
 %>
+
 
 <!DOCTYPE html>
 <html>
@@ -140,23 +142,23 @@
    
      <tr>
 	 <td>Employee ID :<hspace> </td>
-	 <td><input type="text" name="emp_id"  placeholder = "Eg.TU0001"></td>
+	 <td><input type="text" name="emp_id"  placeholder = "Eg.TU0001" required></td>
 	 </tr>
 	 <tr>
 	 <td>Name : </td>
-	 <td><input type="text" name="emp_name"  placeholder = "Enter Name"></td>	 
+	 <td><input type="text" name="emp_name"  placeholder = "Enter Name" required></td>	 
 	 </tr>
 	 <tr>
 	 <td>Date of Birth :</td>
-	 <td><input type="date" name="dob"  placeholder = "dd/mm/yyyy"></td>
+	 <td><input type="date" name="dob"  placeholder = "dd/mm/yyyy" required></td>
 	 </tr>
 	 <tr>
-	 <td>Gender :</td>
+	 <td>Gender :</td><br>
 	 </tr>
 	 <tr>
-	 <td><input type="radio" class="text" name="gender" value="MALE">MALE</td>
-	 <td><input type="radio" class="text" name="gender" value="FEMALE">FEMALE</td></align>
-	 <td><input type="radio" class="text" name="gender" value="OTHERS">OTHERS</td>
+	 <td><input type="radio" class="text" name="gender" value="MALE">MALE</td><br><br>
+	 <td><input type="radio" class="text" name="gender" value="FEMALE">FEMALE</td><br><br>
+	 <td><input type="radio" class="text" name="gender" value="OTHERS">OTHERS</td><br><br>
 	 </tr>
 	 <tr>
 	 <td>Contact :</td>
@@ -164,17 +166,17 @@
 	 </tr>
 	 <tr>
 	 <td>E-Mail :</td>
-	 <td><input type="text" name="email"  placeholder = "abc@xyz.com"></td>
+	 <td><input type="text" name="email"  placeholder = "abc@xyz.com" required></td>
 	 </tr>
 	 <tr>
 	 <td>Address :</td>
-	 <td><input type="text" name="address"  placeholder = "Enter address"></td>
+	 <td><input type="text" name="address"  placeholder = "Enter address" required></td>
 	 </tr>
 	 
 	  <tr>
 	 <td>Designation</td>
 	<td><input list="1" name="designation">
-  <datalist id="1">
+  <datalist id="1" required>
     <option value="Manager">
     <option value="Administrator"> 
     <option value="Clerk"> 
@@ -187,10 +189,10 @@
 	 <tr>
 	 <td>Manager :</td>
 	 <td><input list="2" name="manager_id">
-  <datalist id="2">
-    <option value="TU0002-Preethi">
-    <option value="TU0008-Karthik">
-    <option value="TU0012-Zeenia"> 
+  <datalist id="2" required>
+    <option value="TU0002">
+    <option value="TU0008">
+    <option value="TU0012"> 
   </datalist>
   </td>
   
@@ -221,7 +223,7 @@
 	 </tr>
 	 <tr>
 	 <td>Salary :</td>
-	 <td><input type="numeric" name="salary"  placeholder = "Enter Salary"></td>
+	 <td><input type="numeric" name="salary"  placeholder = "Enter Salary" required></td>
 	 </tr>
 	 <tr>
 	
@@ -268,7 +270,7 @@
 <table align=center style="width:65%">
   <tr align = center>
     <td>Category :</td>
-    <td><input list="category" name="category">
+    <td><input list="category" name="category" required>
       <datalist id="category">
        <option value="cl">
        <option value = "sl">
@@ -278,13 +280,13 @@
 
 <tr>
  <td>From Date:</td>
- <td><input type="text" name="from_date"  placeholder = "yyyy/mm/dd">  </td>
+ <td><input type="text" name="from_date"  placeholder = "yyyy/mm/dd" required>  </td>
  <td>To Date:</td> 
-  <td><input type="text" name="to_date"  placeholder = "yyyy/mm/dd">  </td>
+  <td><input type="text" name="to_date"  placeholder = "yyyy/mm/dd" required>  </td>
 </tr>  
 <tr>
    <td>Reason	 :</td>
-   <td><input type="text" name="Reason"  placeholder = "">  </td>
+   <td><input type="text" name="Reason"  placeholder = "" required>  </td>
 </tr>
 
 <tr>
